@@ -2,7 +2,10 @@ package com.dcman58.Main;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Toolkit;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import com.dcman58.Handlers.Keys;
@@ -11,8 +14,9 @@ public class Game {
 
 	public static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
+	public static JFrame window;
 	public static void main(String[] args) {
-		JFrame window = new JFrame("Artifact: The Journey Unraveled");
+		window = new JFrame("Artifact: The Journey Unraveled");
 		window.add(new GamePanel());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
@@ -36,6 +40,12 @@ public class Game {
 			return false;
 		}
 		return false;
+	}
+	
+	public void icon(){
+		Image image = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Sprites/Other/Artifact-Icon.png"));
+		ImageIcon icon = new ImageIcon( image);
+		window.setIconImage(icon.getImage());
 	}
 
 }

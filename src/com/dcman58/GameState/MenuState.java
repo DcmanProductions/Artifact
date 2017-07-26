@@ -17,10 +17,11 @@ public class MenuState extends GameState {
 	private BufferedImage head;
 
 	private int currentChoice = 0;
-	private String[] options = { "Start", "Quit" };
+	private String[] options = { "Start", "About", "Quit" };
 
 	private Color titleColor;
 	private Font titleFont;
+	private Font subTitleFont;
 
 	private Font font;
 	private Font font2;
@@ -32,11 +33,12 @@ public class MenuState extends GameState {
 		try {
 
 			// load floating head
-			head = ImageIO.read(getClass().getResourceAsStream("/HUD/Hud.gif")).getSubimage(0, 12, 12, 11);
+			head = ImageIO.read(getClass().getResourceAsStream("/Sprites/Other/Artifact.png"));
 
 			// titles and fonts
 			titleColor = Color.WHITE;
 			titleFont = new Font("Times New Roman", Font.PLAIN, 28);
+			subTitleFont = new Font("Times New Roman", Font.PLAIN, 18);
 			font = new Font("Arial", Font.PLAIN, 14);
 			font2 = new Font("Arial", Font.PLAIN, 10);
 
@@ -67,21 +69,29 @@ public class MenuState extends GameState {
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
 		// draw title
-		g.setColor(titleColor);
+		g.setColor(new Color(255,152,92));
 		g.setFont(titleFont);
-		g.drawString("A L I E N   H U N T E R", 20, 90);
+		g.drawString("A R T I F A C T:", 20, 50);
+
+		g.setFont(subTitleFont);
+		g.setColor(new Color(255, 255, 162));
+		g.drawString("T H E  J O U R N E Y ", 80, 75);
+		g.drawString("U N R A V E L E D", 60, 100);
 
 		// draw menu options
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString("Start", 145, 165);
-		g.drawString("Quit", 145, 185);
+		g.drawString("About", 145, 190);
+		g.drawString("Quit", 145, 215);
 
 		// draw floating head
 		if (currentChoice == 0)
 			g.drawImage(head, 125, 154, null);
 		else if (currentChoice == 1)
 			g.drawImage(head, 125, 174, null);
+		else if (currentChoice == 2)
+			g.drawImage(head, 125, 200, null);
 
 		// other
 		g.setFont(font2);
@@ -94,7 +104,10 @@ public class MenuState extends GameState {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
 			gsm.setState(GameStateManager.LEVEL1ASTATE);
-		} else if (currentChoice == 1) {
+		} else if(currentChoice == 1){
+			gsm.setState(GameStateManager.About);
+		}else if (currentChoice == 2) {
+		
 			System.exit(0);
 		}
 	}

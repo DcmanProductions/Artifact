@@ -118,7 +118,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 //		 HEIGHT = 240;
 //		 this.SCALE = 2;
 //		 }
-		System.out.println("Scale " + this.SCALE + " Screen Size "+screenSize);
 		gsm.update();
 		Keys.update();
 	}

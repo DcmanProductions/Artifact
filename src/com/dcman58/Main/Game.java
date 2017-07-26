@@ -12,10 +12,10 @@ public class Game {
 	public static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
 	public static void main(String[] args) {
-		JFrame window = new JFrame("Alien Hunter");
+		JFrame window = new JFrame("Artifact: The Journey Unraveled");
 		window.add(new GamePanel());
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setResizable(true);
+		window.setResizable(false);
 
 		if (!isFullscreen()) {
 			window.pack();

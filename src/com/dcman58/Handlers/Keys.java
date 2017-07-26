@@ -26,12 +26,19 @@ public class Keys {
 	public static int F11 = 10;
 	
 	public static void keySet(int i, boolean b) {
+		//Moves Icon in Main Menu Go Up
 		if(i == KeyEvent.VK_UP) keyState[UP] = b;
+		//Moves Player Left
 		else if(i == KeyEvent.VK_LEFT) keyState[LEFT] = b;
+		//Moves Icon in Main Menu Go Down
 		else if(i == KeyEvent.VK_DOWN) keyState[DOWN] = b;
+		//Moves Player Right
 		else if(i == KeyEvent.VK_RIGHT) keyState[RIGHT] = b;
+		//Jump
 		else if(i == KeyEvent.VK_SPACE) keyState[BUTTON1] = b;
+		//Sprint
 		else if(i == KeyEvent.VK_E) keyState[BUTTON2] = b;
+		//
 		else if(i == KeyEvent.VK_R) keyState[BUTTON3] = b;
 		else if(i == KeyEvent.VK_F) keyState[BUTTON4] = b;
 		else if(i == KeyEvent.VK_ENTER) keyState[ENTER] = b;

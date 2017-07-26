@@ -23,6 +23,7 @@ public class Keys {
 	public static int BUTTON4 = 7;
 	public static int ENTER = 8;
 	public static int ESCAPE = 9;
+	public static int F11 = 10;
 	
 	public static void keySet(int i, boolean b) {
 		if(i == KeyEvent.VK_UP) keyState[UP] = b;
@@ -30,11 +31,12 @@ public class Keys {
 		else if(i == KeyEvent.VK_DOWN) keyState[DOWN] = b;
 		else if(i == KeyEvent.VK_RIGHT) keyState[RIGHT] = b;
 		else if(i == KeyEvent.VK_SPACE) keyState[BUTTON1] = b;
-		else if(i == KeyEvent.VK_SHIFT) keyState[BUTTON2] = b;
-		else if(i == KeyEvent.VK_W) keyState[BUTTON3] = b;
-		else if(i == KeyEvent.VK_D) keyState[BUTTON4] = b;
+		else if(i == KeyEvent.VK_E) keyState[BUTTON2] = b;
+		else if(i == KeyEvent.VK_R) keyState[BUTTON3] = b;
+		else if(i == KeyEvent.VK_F) keyState[BUTTON4] = b;
 		else if(i == KeyEvent.VK_ENTER) keyState[ENTER] = b;
 		else if(i == KeyEvent.VK_ESCAPE) keyState[ESCAPE] = b;
+		else if(i == KeyEvent.VK_F11) keyState[F11] = b;
 	}
 	
 	public static void update() {

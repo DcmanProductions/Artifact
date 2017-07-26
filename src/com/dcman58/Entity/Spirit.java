@@ -1,5 +1,7 @@
 package com.dcman58.Entity;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -48,7 +50,8 @@ public class Spirit extends Enemy {
 		cwidth = 30;
 		cheight = 30;
 		
-		health = maxHealth = 80;
+		health = maxHealth = 100;
+		
 		
 		moveSpeed = 1.4;
 		
@@ -252,6 +255,9 @@ public class Spirit extends Enemy {
 			if(flinchCount % 4 < 2) return;
 		}
 		super.draw(g);
+		g.setColor(Color.RED);
+		g.setFont(new Font("Arial", Font.BOLD, 18));
+		g.drawString(health+"%", 275, 230);
 	}
 
 }

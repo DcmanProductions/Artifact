@@ -106,7 +106,7 @@ public class Player extends MapObject {
 		doubleJumpStart = -3;
 		
 		damage = 2;
-		chargeDamage = 1;
+		chargeDamage = 3;
 		
 		facingRight = true;
 		
@@ -165,6 +165,7 @@ public class Player extends MapObject {
 		JukeBox.load("/SFX/playercharge.mp3", "playercharge");
 		
 	}
+
 	
 	public void init(
 		ArrayList<Enemy> enemies,

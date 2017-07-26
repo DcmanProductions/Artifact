@@ -38,7 +38,7 @@ public class Level1AState extends GameState {
 	private ArrayList<Explosion> explosions;
 	
 	private HUD hud;
-	private BufferedImage hageonText;
+	private BufferedImage groundZeroText;
 	private Title title;
 	private Title subtitle;
 	private Teleport teleport;
@@ -101,12 +101,12 @@ public class Level1AState extends GameState {
 		
 		// title and subtitle
 		try {
-			hageonText = ImageIO.read(
-				getClass().getResourceAsStream("/HUD/HageonTemple.gif")
+			groundZeroText = ImageIO.read(
+				getClass().getResourceAsStream("/HUD/GroundZero.png")
 			);
-			title = new Title(hageonText.getSubimage(0, 0, 178, 20));
+			title = new Title(groundZeroText.getSubimage(0, 0, 178, 20));
 			title.sety(60);
-			subtitle = new Title(hageonText.getSubimage(0, 20, 82, 13));
+			subtitle = new Title(groundZeroText.getSubimage(0, 20, 82, 13));
 			subtitle.sety(85);
 		}
 		catch(Exception e) {
@@ -339,9 +339,9 @@ public class Level1AState extends GameState {
 		tileMap.setShaking(false, 0);
 		eventStart = true;
 		eventStart();
-		title = new Title(hageonText.getSubimage(0, 0, 178, 20));
+		title = new Title(groundZeroText.getSubimage(0, 0, 178, 20));
 		title.sety(60);
-		subtitle = new Title(hageonText.getSubimage(0, 33, 91, 13));
+		subtitle = new Title(groundZeroText.getSubimage(0, 33, 91, 13));
 		subtitle.sety(85);
 	}
 	

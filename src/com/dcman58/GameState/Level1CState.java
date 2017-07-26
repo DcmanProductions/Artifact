@@ -74,8 +74,8 @@ public class Level1CState extends GameState {
 		// player
 		player = new Player(tileMap);
 		player.setPosition(50, 190);
-		player.setHealth(PlayerSave.getHealth());
-		player.setLives(PlayerSave.getLives());
+		player.setHealth(PlayerSave.getHealth()+4);
+		player.setLives(PlayerSave.getLives()+1);
 		player.setTime(PlayerSave.getTime());
 		
 		// explosions

@@ -24,7 +24,7 @@ import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
 
-public class Level1AState extends GameState {
+public class Level2AState extends GameState {
 
 	private Background sky;
 	private Background clouds;
@@ -38,10 +38,12 @@ public class Level1AState extends GameState {
 	private ArrayList<Explosion> explosions;
 
 	private HUD hud;
-	private BufferedImage groundZeroText;
+	private BufferedImage HellText;
 	private Title title;
 	private Title subtitle;
 	private Teleport teleport;
+	
+	private PlayerSave ps;
 
 	// events
 	private boolean blockInput = false;
@@ -51,25 +53,25 @@ public class Level1AState extends GameState {
 	private boolean eventFinish;
 	private boolean eventDead;
 
-	public Level1AState(GameStateManager gsm) {
+	public Level2AState(GameStateManager gsm) {
 		super(gsm);
 		init();
 	}
 
 	public void init() {
 
+		ps.setCurrentState(gsm.LEVEL2ASTATE);
+		
 		// backgrounds
-		sky = new Background("/Backgrounds/sky.gif", 0);
-		clouds = new Background("/Backgrounds/clouds.gif", 0.1);
-		mountains = new Background("/Backgrounds/mountains.gif", 0.2);
+		sky = new Background("/Backgrounds/hellbg.png", 0);
+		// clouds = new Background("/Backgrounds/clouds.gif", 0.1);
+		// mountains = new Background("/Backgrounds/mountains.gif", 0.2);
 
-		PlayerSave.setCurrentState(GameStateManager.LEVEL2ASTATE);
-		
-		
 		// tilemap
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
-		tileMap.loadMap("/Maps/level1a.map");
+		tileMap.loadTiles("/Tilesets/firetileset.png");
+		tileMap.loadMap("/Maps/level2a.map");
+//		tileMap.loadMapImage("/Maps/Level2AMap.png");
 		tileMap.setPosition(140, 0);
 		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(),
 				tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
@@ -77,7 +79,7 @@ public class Level1AState extends GameState {
 
 		// player
 		player = new Player(tileMap);
-		player.setPosition(300, 161);
+		player.setPosition(74, 161);
 		player.setHealth(PlayerSave.getHealth());
 		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
@@ -101,10 +103,10 @@ public class Level1AState extends GameState {
 
 		// title and subtitle
 		try {
-			groundZeroText = ImageIO.read(getClass().getResourceAsStream("/HUD/GroundZero.png"));
-			title = new Title(groundZeroText.getSubimage(0, 0, 178, 20));
+			HellText = ImageIO.read(getClass().getResourceAsStream("/HUD/Hell.png"));
+			title = new Title(HellText.getSubimage(0, 0, 260, 35));
 			title.sety(60);
-			subtitle = new Title(groundZeroText.getSubimage(0, 20, 164, 20));
+			subtitle = new Title(HellText.getSubimage(0, 30, 121, 32));
 			subtitle.sety(85);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -194,6 +196,9 @@ public class Level1AState extends GameState {
 		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
 			eventDead = blockInput = true;
 		}
+		
+		System.out.println("Player Location: X:"+player.getx()+" Y: "+player.gety());
+		
 
 		// play events
 		if (eventStart)
@@ -216,8 +221,8 @@ public class Level1AState extends GameState {
 		}
 
 		// move backgrounds
-		clouds.setPosition(tileMap.getx(), tileMap.gety());
-		mountains.setPosition(tileMap.getx(), tileMap.gety());
+//		clouds.setPosition(tileMap.getx(), tileMap.gety());
+//		mountains.setPosition(tileMap.getx(), tileMap.gety());
 
 		// update player
 		player.update();
@@ -266,8 +271,6 @@ public class Level1AState extends GameState {
 
 		// draw background
 		sky.draw(g);
-		clouds.draw(g);
-		mountains.draw(g);
 
 		// draw tilemap
 		tileMap.draw(g);
@@ -334,16 +337,16 @@ public class Level1AState extends GameState {
 	// reset level
 	private void reset() {
 		player.reset();
-		player.setPosition(300, 161);
+		player.setPosition(74, 161);
 		populateEnemies();
 		blockInput = true;
 		eventCount = 0;
 		tileMap.setShaking(false, 0);
 		eventStart = true;
 		eventStart();
-		title = new Title(groundZeroText.getSubimage(0, 0, 178, 20));
+		title = new Title(HellText.getSubimage(0, 0, 178, 20));
 		title.sety(60);
-		subtitle = new Title(groundZeroText.getSubimage(0, 33, 91, 13));
+		subtitle = new Title(HellText.getSubimage(0, 33, 91, 13));
 		subtitle.sety(85);
 	}
 
@@ -422,7 +425,7 @@ public class Level1AState extends GameState {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
-			gsm.setState(GameStateManager.LEVEL1BSTATE);
+			gsm.setState(GameStateManager.LEVEL2BSTATE);
 		}
 
 	}

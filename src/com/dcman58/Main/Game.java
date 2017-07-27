@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 import com.dcman58.Handlers.Keys;
 
-public class Game {
+public class Game{
 
 	public static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 

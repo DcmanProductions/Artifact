@@ -257,7 +257,7 @@ public class Spirit extends Enemy {
 		super.draw(g);
 		g.setColor(Color.RED);
 		g.setFont(new Font("Arial", Font.BOLD, 18));
-		g.drawString(health+"%", 275, 230);
+		g.drawString("Health: "+health+"/"+maxHealth, 200, 230);
 	}
 
 }

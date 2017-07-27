@@ -42,7 +42,19 @@ public class AboutState extends GameState {
 		g.drawString("A Little Game Created by Drew Chase using the Java Programming", 10, 10+60);
 		g.drawString("Language.Beta Tested By James Nickerson. Inspired by Mario and Temple", 5,20+60);
 		g.drawString("run (kinda). Thanks for Playing my Creation!", 5, 30+60);
-		g.drawString("Press [Space] Or [Escape] to Return", 5, 40+60);
+		
+		g.setFont(titleFont);
+		g.drawString("Controlls", 10, 70 + 60);
+		g.setFont(new Font("Arial", Font.PLAIN, 9));
+		g.drawString("[CONTROL + S] Screen Shot sent to your Desktop", 10, 80 + 60);
+		g.drawString("[LEFT Arrow Key] Move Left", 5, 90 + 60);
+		g.drawString("[RIGHT Arrow Key] Move Right", 5, 100 + 60);
+		g.drawString("[ESCAPE] Pause and [SPACE] From pause to Main Menu", 5, 110 + 60);
+		g.drawString("[SPACE] To Jump", 5, 120 + 60);
+		g.drawString("[R] To Preform a Short Ranged Attack", 5, 130 + 60);
+		g.drawString("[F] To Preform a Dash Attack", 5, 140 + 60);
+		g.drawString("Press [Space] Or [Escape] to Return", 5, 150 + 60);
+		
 	}
 
 	@Override

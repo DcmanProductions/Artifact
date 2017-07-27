@@ -106,7 +106,7 @@ public class Player extends MapObject {
 		doubleJumpStart = -3;
 		
 		damage = 2;
-		chargeDamage = 3;
+		chargeDamage = 1;
 		
 		facingRight = true;
 		
@@ -118,7 +118,7 @@ public class Player extends MapObject {
 			
 			BufferedImage spritesheet = ImageIO.read(
 				getClass().getResourceAsStream(
-					"/Sprites/Player/PlayerSprites.gif"
+					"/Sprites/Player/PlayerSprites.png"
 				)
 			);
 			

@@ -25,6 +25,7 @@ public class MenuState extends GameState {
 
 	private Font font;
 	private Font font2;
+	private PlayerSave ps;
 
 	public MenuState(GameStateManager gsm) {
 
@@ -82,14 +83,14 @@ public class MenuState extends GameState {
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString("Start", 145, 165);
-		g.drawString("About", 145, 190);
+		g.drawString("About and Controlls", 100, 190);
 		g.drawString("Quit", 145, 215);
 
 		// draw floating head
 		if (currentChoice == 0)
 			g.drawImage(head, 125, 154, null);
 		else if (currentChoice == 1)
-			g.drawImage(head, 125, 174, null);
+			g.drawImage(head, 80, 174, null);
 		else if (currentChoice == 2)
 			g.drawImage(head, 125, 200, null);
 
@@ -103,7 +104,7 @@ public class MenuState extends GameState {
 		if (currentChoice == 0) {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
-			gsm.setState(GameStateManager.LEVEL1ASTATE);
+			gsm.setState(ps.getCurrentState());
 		} else if(currentChoice == 1){
 			gsm.setState(GameStateManager.About);
 		}else if (currentChoice == 2) {

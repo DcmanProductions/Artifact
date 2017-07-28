@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.dcman58.Audio.JukeBox;
+import com.dcman58.Enemies.DarkEnergy;
 import com.dcman58.Enemies.Gazer;
 import com.dcman58.Enemies.GelPop;
+import com.dcman58.Enemies.Tengu;
 import com.dcman58.Entity.Enemy;
 import com.dcman58.Entity.EnemyProjectile;
 import com.dcman58.Entity.EnergyParticle;
@@ -42,7 +44,7 @@ public class Level2AState extends GameState {
 	private Title title;
 	private Title subtitle;
 	private Teleport teleport;
-	
+
 	private PlayerSave ps;
 
 	// events
@@ -60,8 +62,8 @@ public class Level2AState extends GameState {
 
 	public void init() {
 
-		ps.setCurrentState(gsm.LEVEL2ASTATE);
-		
+		PlayerSave.Save(GameStateManager.LEVEL2ASTATE);
+
 		// backgrounds
 		sky = new Background("/Backgrounds/hellbg.png", 0);
 		// clouds = new Background("/Backgrounds/clouds.gif", 0.1);
@@ -71,7 +73,7 @@ public class Level2AState extends GameState {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/firetileset.png");
 		tileMap.loadMap("/Maps/level2a.map");
-//		tileMap.loadMapImage("/Maps/Level2AMap.png");
+		// tileMap.loadMapImage("/Maps/Level2AMap.png");
 		tileMap.setPosition(140, 0);
 		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(),
 				tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
@@ -79,7 +81,7 @@ public class Level2AState extends GameState {
 
 		// player
 		player = new Player(tileMap);
-		player.setPosition(74, 161);
+		player.setPosition(73, 191);
 		player.setHealth(PlayerSave.getHealth());
 		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
@@ -106,7 +108,7 @@ public class Level2AState extends GameState {
 			HellText = ImageIO.read(getClass().getResourceAsStream("/HUD/Hell.png"));
 			title = new Title(HellText.getSubimage(0, 0, 260, 35));
 			title.sety(60);
-			subtitle = new Title(HellText.getSubimage(0, 30, 121, 32));
+			subtitle = new Title(HellText.getSubimage(0, 30, 150, 40));
 			subtitle.sety(85);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +116,7 @@ public class Level2AState extends GameState {
 
 		// teleport
 		teleport = new Teleport(tileMap);
-		teleport.setPosition(3700, 131);
+		teleport.setPosition(3700, 125);
 
 		// start event
 		eventStart = true;
@@ -134,14 +136,20 @@ public class Level2AState extends GameState {
 
 	private void populateEnemies() {
 		enemies.clear();
-		/*
-		 * Tengu t = new Tengu(tileMap, player, enemies); t.setPosition(1300,
-		 * 100); enemies.add(t); t = new Tengu(tileMap, player, enemies);
-		 * t.setPosition(1330, 100); enemies.add(t); t = new Tengu(tileMap,
-		 * player, enemies); t.setPosition(1360, 100); enemies.add(t);
-		 */
+
+		Tengu t = new Tengu(tileMap, player, enemies);
+		t.setPosition(1300, 100);
+		enemies.add(t);
+		t = new Tengu(tileMap, player, enemies);
+		t.setPosition(1330, 100);
+		enemies.add(t);
+		t = new Tengu(tileMap, player, enemies);
+		t.setPosition(1360, 100);
+		enemies.add(t);
+
 		GelPop gp;
 		Gazer g;
+		DarkEnergy de;
 
 		gp = new GelPop(tileMap, player);
 		gp.setPosition(1300, 100);
@@ -149,9 +157,9 @@ public class Level2AState extends GameState {
 		gp = new GelPop(tileMap, player);
 		gp.setPosition(1320, 100);
 		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(1340, 100);
-		enemies.add(gp);
+		t = new Tengu(tileMap, player, enemies);
+		t.setPosition(1340, 100);
+		enemies.add(t);
 		gp = new GelPop(tileMap, player);
 		gp.setPosition(1660, 100);
 		enemies.add(gp);
@@ -167,19 +175,32 @@ public class Level2AState extends GameState {
 		gp = new GelPop(tileMap, player);
 		gp.setPosition(2960, 100);
 		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(2980, 100);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(3000, 100);
-		enemies.add(gp);
 
-		g = new Gazer(tileMap);
-		g.setPosition(2600, 100);
-		enemies.add(g);
-		g = new Gazer(tileMap);
-		g.setPosition(3500, 100);
-		enemies.add(g);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2980, 75);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(3075, 101);
+		enemies.add(de);
+
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2600, 191);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2600, 150);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2600, 125);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2675, 191);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2675, 150);
+		enemies.add(de);
+		de = new DarkEnergy(tileMap);
+		de.setPosition(2675, 125);
+		enemies.add(de);
 	}
 
 	public void update() {
@@ -196,9 +217,8 @@ public class Level2AState extends GameState {
 		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
 			eventDead = blockInput = true;
 		}
-		
-		System.out.println("Player Location: X:"+player.getx()+" Y: "+player.gety());
-		
+
+		System.out.println("Player Location: X:" + player.getx() + " Y: " + player.gety());
 
 		// play events
 		if (eventStart)
@@ -221,8 +241,8 @@ public class Level2AState extends GameState {
 		}
 
 		// move backgrounds
-//		clouds.setPosition(tileMap.getx(), tileMap.gety());
-//		mountains.setPosition(tileMap.getx(), tileMap.gety());
+		// clouds.setPosition(tileMap.getx(), tileMap.gety());
+		// mountains.setPosition(tileMap.getx(), tileMap.gety());
 
 		// update player
 		player.update();

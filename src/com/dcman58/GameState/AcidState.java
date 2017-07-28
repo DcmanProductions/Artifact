@@ -53,9 +53,9 @@ public class AcidState extends GameState {
 		AffineTransform at = new AffineTransform();
 		at.translate(GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2);
 		at.rotate(angle);
-		g.setFont(new Font("Arial", Font.BOLD, 24));
+		g.setFont(new Font("Arial", Font.PLAIN, 14));
 		g.setColor(Color.BLACK);
-		g.drawString("TIME " + time, 20, 20);
+		g.drawString("Loading Next Level...", 20, 20);
 		g.drawImage(image, at, null);
 	}
 

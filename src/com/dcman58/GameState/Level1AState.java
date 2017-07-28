@@ -57,6 +57,8 @@ public class Level1AState extends GameState {
 	}
 
 	public void init() {
+		
+		PlayerSave.Save(GameStateManager.LEVEL1ASTATE);
 
 		// backgrounds
 		sky = new Background("/Backgrounds/sky.gif", 0);

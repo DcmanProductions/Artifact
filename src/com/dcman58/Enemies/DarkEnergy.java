@@ -34,7 +34,7 @@ public class DarkEnergy extends Enemy {
 		cwidth = 12;
 		cheight = 12;
 		
-		damage = 1;
+		damage = 2;
 		moveSpeed = 5;
 		
 		startSprites = Content.DarkEnergy[0];

@@ -104,7 +104,7 @@ public class MenuState extends GameState {
 		if (currentChoice == 0) {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
-			gsm.setState(PlayerSave.Load());
+			gsm.setState(PlayerSave.LoadLevel());
 		} else if(currentChoice == 1){
 			gsm.setState(GameStateManager.About);
 		}else if (currentChoice == 2) {

@@ -1,5 +1,7 @@
 package com.dcman58.GameState;
 
+import java.awt.Toolkit;
+
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Main.GamePanel;
 
@@ -50,7 +52,9 @@ public class GameStateManager {
 		else if (state == LEVEL1CSTATE)
 			gameStates[state] = new Level1CState(this);
 		else if (state == LEVEL2ASTATE)
-			gameStates[state] = new Level2AState(this);
+			gameStates[state] = new Level2BState(this);
+		else if (state == LEVEL2BSTATE)
+			gameStates[state] = new Level2BState(this);
 		else if (state == ACIDSTATE)
 			gameStates[state] = new AcidState(this);
 	}
@@ -87,6 +91,7 @@ public class GameStateManager {
 			gameStates[currentState].draw(g);
 		else {
 			g.setColor(java.awt.Color.BLACK);
+//			g.fillRect(0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
 			g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		}
 	}

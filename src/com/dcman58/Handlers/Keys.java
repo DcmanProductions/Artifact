@@ -37,9 +37,9 @@ public class Keys {
 		//Jump
 		else if(i == KeyEvent.VK_SPACE) keyState[BUTTON1] = b;
 		//Sprint
-		else if(i == KeyEvent.VK_E) keyState[BUTTON2] = b;
+		else if(i == KeyEvent.VK_SHIFT) keyState[BUTTON2] = b;
 		//
-		else if(i == KeyEvent.VK_R) keyState[BUTTON3] = b;
+		else if(i == KeyEvent.VK_E) keyState[BUTTON3] = b;
 		else if(i == KeyEvent.VK_F) keyState[BUTTON4] = b;
 		else if(i == KeyEvent.VK_ENTER) keyState[ENTER] = b;
 		else if(i == KeyEvent.VK_ESCAPE) keyState[ESCAPE] = b;

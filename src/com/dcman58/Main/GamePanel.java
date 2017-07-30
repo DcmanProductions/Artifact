@@ -22,9 +22,13 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	public static int WIDTH = 320;
 	public static int HEIGHT = 240;
+	// public static int WIDTH =
+	// Toolkit.getDefaultToolkit().getScreenSize().width;
+	// public static int HEIGHT =
+	// Toolkit.getDefaultToolkit().getScreenSize().height;
+	// public static int SCALE=4;
 	public static int SCALE = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1080
 			&& Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1920) ? 4 : 2;
-	public static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 	// game thread
 	private Thread thread;
 	private boolean running;
@@ -47,7 +51,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		super();
 		Game game = new Game();
 		game.icon();
-		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		 setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+//		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		setFocusable(true);
 		requestFocus();
 	}
@@ -64,6 +69,11 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	private void init() {
 
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		// image = new
+		// BufferedImage((Toolkit.getDefaultToolkit().getScreenSize().width /
+		// SCALE),
+		// Toolkit.getDefaultToolkit().getScreenSize().height / SCALE,
+		// BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		/*
 		 * g.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -107,20 +117,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	}
 
 	private void update() {
-
-		// if (screenSize.getWidth() >= 900) {
-		// WIDTH = 320;
-		// HEIGHT = 240;
-		// this.SCALE = 4;
-		// } else if (screenSize.getWidth() >= 1000) {
-		// WIDTH = 320;
-		// HEIGHT = 240;
-		// this.SCALE = 4;
-		// } else {
-		// WIDTH = 320;
-		// HEIGHT = 240;
-		// this.SCALE = 2;
-		// }
 		gsm.update();
 		Keys.update();
 	}
@@ -131,68 +127,55 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
-		g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+		g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT *SCALE, null);
 		g2.dispose();
 		if (screenshot) {
 			screenshot = false;
 			try {
-				java.io.File out = new java.io.File(System.getProperty("user.home")+"/Desktop/Artifact ScreenShot-" + System.nanoTime() + ".png");
+				java.io.File out = new java.io.File(
+						System.getProperty("user.home") + "/Desktop/Artifact ScreenShot-" + System.nanoTime() + ".png");
 				javax.imageio.ImageIO.write(image, "png", out);
 			} catch (Exception e) {
 			}
 		}
 		if (!recording)
 			return;
-		/*try {
-			// java.io.File out = new
-			// java.io.File(System.getProperty("user.home")+"/Desktop\\Artifact-Recordings\\frame"
-			// + recordingCount + ".gif");
-			// javax.imageio.ImageIO.write(image, "gif", out);
-			// recordingCount++;
-			try {
-				// Temp file for the Recorder
-				Date date = new Date(); 
-				DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
-//				FileWriter write = new FileWriter(new File(System.getProperty("user.home")+"/Desktop\\Artifact-Recordings\\frame", "GameCapture"+System.currentTimeMillis()+".mp4"));
-//				File file = new File(System.getProperty("user.home")+"/Desktop\\", "GameCapture"+System.currentTimeMillis()+".mp4");
-//				File file = new File("GameCapture"+System.currentTimeMillis()+".mp4");
-				OutputStream out = new FileOutputStream(file);
-				ScreenRecorder screenRecorder = new DesktopScreenRecorder(out, new GameCapture());
-				screenRecorder.startRecording();
-				try {
-					Thread.sleep(5000);
-					screenRecorder.stopRecording();
-					// We reformat the video to .mov file
-					RecordingConverter.main(new String[] { file.getAbsolutePath() });
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				out.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			try {
-			    //Temp file for the Recorder
-			    File file = new File(System.getProperty("user.home")+"/Desktop/GameCapture/", "GameCapture"+System.currentTimeMillis()+".png");
-			    OutputStream out = new FileOutputStream(file);
-			    ScreenRecorder screenRecorder = new DesktopScreenRecorder(out,new GameCapture());
-			    screenRecorder.startRecording();
-			    try {
-			        Thread.sleep(500);
-			        screenRecorder.stopRecording();
-			        //We reformat the video to .mov file
-			        RecordingConverter.main(new String[]{file.getAbsolutePath()});
-			    } catch(InterruptedException e) {
-			        e.printStackTrace();
-			    }
-			    out.close();
-			} catch (FileNotFoundException e) {
-			    e.printStackTrace();
-			}
-
-		} catch (Exception e) {
-			System.out.println("ERROR IN SCREEN RECORDER!!!   "+e.getMessage());
-		}*/
+		/*
+		 * try { // java.io.File out = new //
+		 * java.io.File(System.getProperty("user.home")+
+		 * "/Desktop\\Artifact-Recordings\\frame" // + recordingCount + ".gif");
+		 * // javax.imageio.ImageIO.write(image, "gif", out); //
+		 * recordingCount++; try { // Temp file for the Recorder Date date = new
+		 * Date(); DateFormat dateFormat = new
+		 * SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // FileWriter write = new
+		 * FileWriter(new File(System.getProperty("user.home")+
+		 * "/Desktop\\Artifact-Recordings\\frame",
+		 * "GameCapture"+System.currentTimeMillis()+".mp4")); // File file = new
+		 * File(System.getProperty("user.home")+"/Desktop\\", "
+		 * GameCapture"+System.currentTimeMillis()+".mp4"); // File file = new
+		 * File("GameCapture"+System.currentTimeMillis()+".mp4"); OutputStream
+		 * out = new FileOutputStream(file); ScreenRecorder screenRecorder = new
+		 * DesktopScreenRecorder(out, new GameCapture());
+		 * screenRecorder.startRecording(); try { Thread.sleep(5000);
+		 * screenRecorder.stopRecording(); // We reformat the video to .mov file
+		 * RecordingConverter.main(new String[] { file.getAbsolutePath() }); }
+		 * catch (InterruptedException e) { e.printStackTrace(); } out.close();
+		 * } catch (FileNotFoundException e) { e.printStackTrace(); } try {
+		 * //Temp file for the Recorder File file = new
+		 * File(System.getProperty("user.home")+"/Desktop/GameCapture/",
+		 * "GameCapture"+System.currentTimeMillis()+".png"); OutputStream out =
+		 * new FileOutputStream(file); ScreenRecorder screenRecorder = new
+		 * DesktopScreenRecorder(out,new GameCapture());
+		 * screenRecorder.startRecording(); try { Thread.sleep(500);
+		 * screenRecorder.stopRecording(); //We reformat the video to .mov file
+		 * RecordingConverter.main(new String[]{file.getAbsolutePath()}); }
+		 * catch(InterruptedException e) { e.printStackTrace(); } out.close(); }
+		 * catch (FileNotFoundException e) { e.printStackTrace(); }
+		 * 
+		 * } catch (Exception e) {
+		 * System.out.println("ERROR IN SCREEN RECORDER!!!   "+e.getMessage());
+		 * }
+		 */
 	}
 
 	public void keyTyped(KeyEvent key) {
@@ -200,10 +183,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	public void keyPressed(KeyEvent key) {
 		if (key.isControlDown()) {
-//			if (key.getKeyCode() == KeyEvent.VK_R) {
-//				recording = !recording;
-//				return;
-//			}
+			// if (key.getKeyCode() == KeyEvent.VK_R) {
+			// recording = !recording;
+			// return;
+			// }
 			if (key.getKeyCode() == KeyEvent.VK_S) {
 				screenshot = true;
 				return;

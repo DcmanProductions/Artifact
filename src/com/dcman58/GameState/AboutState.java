@@ -51,9 +51,10 @@ public class AboutState extends GameState {
 		g.drawString("[RIGHT Arrow Key] Move Right", 5, 100 + 60);
 		g.drawString("[ESCAPE] Pause and [SPACE] From pause to Main Menu", 5, 110 + 60);
 		g.drawString("[SPACE] To Jump", 5, 120 + 60);
-		g.drawString("[R] To Preform a Short Ranged Attack", 5, 130 + 60);
+		g.drawString("[W] To Preform a Short Ranged Attack", 5, 130 + 60);
 		g.drawString("[F] To Preform a Dash Attack", 5, 140 + 60);
-		g.drawString("Press [Space] Or [Escape] to Return", 5, 150 + 60);
+		g.drawString("[SHIFT] To Sprint", 5, 150 + 60);
+		g.drawString("Press [Space] Or [Escape] to Return", 5, 160 + 60);
 		
 	}
 

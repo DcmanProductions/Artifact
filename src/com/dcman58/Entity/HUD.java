@@ -29,10 +29,17 @@ public class HUD {
 			heart = image.getSubimage(0, 0, 13, 12);
 			life = image.getSubimage(0, 12, 12, 11);
 
-			showBottomLeft = false;
-			showTopLeft = false;
-			showTopRight = false;
-			showBottomRight = false;
+			showBottomLeft = PlayerSave.getHasBottomLeft();
+			 showTopLeft = PlayerSave.getHasTopLeft();
+			showTopRight = PlayerSave.getHasTopRight();
+			showBottomRight = PlayerSave.getHasBottomRight();
+
+			// System.out.println("HasBottom Right="+PlayerSave.hasBottomRight);
+
+			// showBottomLeft = true;
+//			showTopLeft = true;
+			// showTopRight = true;
+			// showBottomRight = true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -48,20 +55,12 @@ public class HUD {
 		}
 		if (showBottomLeft)
 			g.drawImage(bottomLeft, 10, 50, null);
-		else
-			return;
 		if (showBottomRight)
 			g.drawImage(bottomRight, 20, 50, null);
-		else
-			return;
 		if (showTopLeft)
 			g.drawImage(topLeft, 10, 40, null);
-		else
-			return;
 		if (showTopRight)
 			g.drawImage(topRight, 20, 40, null);
-		else
-			return;
 
 		g.setColor(java.awt.Color.WHITE);
 		g.setFont(new Font("Arial", Font.PLAIN, 12));

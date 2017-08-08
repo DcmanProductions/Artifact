@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+@SuppressWarnings("all")
 public class ImagetoPixel {
 	
 	

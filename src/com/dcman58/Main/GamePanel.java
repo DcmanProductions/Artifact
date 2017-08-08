@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import com.dcman58.GameState.GameStateManager;
 import com.dcman58.Handlers.Keys;
 
-@SuppressWarnings("serial")
+@SuppressWarnings("all")
 public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	// dimensions
@@ -27,11 +27,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	// public static int HEIGHT =
 	// Toolkit.getDefaultToolkit().getScreenSize().height;
 	// public static int SCALE=4;
-	public static int SCALE = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1080
-			&& Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1920) ? 4 : 2;
+	public static int SCALE = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1080 && Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1920) ? 4 : 2;
 	// game thread
 	private Thread thread;
-	private boolean running;
+	public boolean running;
 	private int FPS = 60;
 	private long targetTime = 1000 / FPS;
 
@@ -51,8 +50,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		super();
 		Game game = new Game();
 		game.icon();
-		 setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-//		setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		// setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		setFocusable(true);
 		requestFocus();
 	}
@@ -127,13 +126,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
-		g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT *SCALE, null);
+		g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		g2.dispose();
 		if (screenshot) {
 			screenshot = false;
 			try {
-				java.io.File out = new java.io.File(
-						System.getProperty("user.home") + "/Desktop/Artifact ScreenShot-" + System.nanoTime() + ".png");
+				java.io.File out = new java.io.File(System.getProperty("user.home") + "/Desktop/Artifact ScreenShot-" + System.nanoTime() + ".png");
 				javax.imageio.ImageIO.write(image, "png", out);
 			} catch (Exception e) {
 			}

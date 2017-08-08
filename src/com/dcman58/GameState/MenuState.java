@@ -12,6 +12,7 @@ import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 
+@SuppressWarnings("all")
 public class MenuState extends GameState {
 
 	private BufferedImage head;
@@ -83,7 +84,7 @@ public class MenuState extends GameState {
 		g.setFont(font);
 		g.setColor(Color.WHITE);
 		g.drawString("Start", 145, 165);
-		g.drawString("About and Controlls", 100, 190);
+		g.drawString("About Us and Controls", 100, 190);
 		g.drawString("Quit", 145, 215);
 
 		// draw floating head

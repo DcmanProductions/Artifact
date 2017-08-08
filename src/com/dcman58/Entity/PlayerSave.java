@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 
 import com.dcman58.GameState.GameStateManager;
 
+@SuppressWarnings("all")
 public class PlayerSave {
 
 	private static int lives = 3;
@@ -24,18 +25,18 @@ public class PlayerSave {
 	public static boolean hasTopLeft;
 	public static HUD hud;
 
-	public static String FileName = "game.save", fileContent;
-	public static File objFile;
-	public static PrintWriter writer;
-	public static BufferedWriter bw;
-	public static BufferedReader reader;
-	public static String folderName = System.getProperty("user.home") + "/ArtifactSaveFiles/";
+	private static String FileName = "game.save", fileContent;
+	private static File objFile;
+	private static PrintWriter writer;
+	private static BufferedWriter bw;
+	private static BufferedReader reader;
+	private static String folderName = System.getProperty("user.home") + "/ArtifactSaveFiles/";
 
 	public static void init() {
 		lives = 3;
 		health = 5;
 		time = 0;
-		System.out.println("Pieces: " + LoadArtifactHUD());
+		// System.out.println("Pieces: " + LoadArtifactHUD());
 		currentState = GameStateManager.LEVEL1ASTATE;
 
 	}
@@ -48,6 +49,10 @@ public class PlayerSave {
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println("level:" + currentState);
 			pw.println("piece:" + hasPiece);
+			pw.println("topLeft:" + getHasTopLeft());
+			pw.println("bottomLeft:" + getHasBottomLeft());
+			pw.println("topRight:" + getHasTopRight());
+			pw.println("bottomRight:" + getHasBottomRight());
 			pw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -56,31 +61,25 @@ public class PlayerSave {
 
 	}
 
-	// public static void Save(int currentState, boolean hasBottomLeft, boolean
-	// hasBottomRight, boolean hasTopRight,
-	// boolean hasTopLeft) {
-	// try {
-	// FileWriter fw;
-	// fw = new FileWriter(FileName);
-	//
-	// System.out.println("Saved File: level:" + currentState);
-	// PrintWriter pw = new PrintWriter(fw);
-	// pw.println("level:" + currentState);
-	// pw.println("bLeft:" + hasBottomLeft);
-	// pw.println("bRight:" + hasBottomRight);
-	// pw.println("tRight:" + hasTopRight);
-	// pw.println("tLeft:" + hasTopLeft);
-	//
-	// PlayerSave.hasBottomLeft = hasBottomLeft;
-	// PlayerSave.hasBottomRight = hasBottomRight;
-	// PlayerSave.hasTopLeft = hasTopLeft;
-	// PlayerSave.hasTopRight = hasTopRight;
-	// pw.close();
-	// } catch (IOException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
+	public static void Save(int currentState, int hasPiece, boolean hasTopLeft, boolean hasBottomLeft, boolean hasTopRight, boolean hasBottomRight) {
+		FileWriter fw;
+		try {
+			fw = new FileWriter(FileName);
+			System.out.println("Saved File: level:" + currentState);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.println("level:" + currentState);
+			pw.println("piece:" + hasPiece);
+			pw.println("topLeft:" + hasTopLeft);
+			pw.println("bottomLeft:" + hasBottomLeft);
+			pw.println("topRight:" + hasTopRight);
+			pw.println("bottomRight:" + hasBottomRight);
+			pw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	public static int LoadArtifactHUD() {
 		FileReader fr;
@@ -89,8 +88,34 @@ public class PlayerSave {
 			BufferedReader br = new BufferedReader(fr);
 			String text;
 			while ((text = br.readLine()) != null) {
-				if(text.startsWith("piece:"))
-				return (Integer.parseInt(text.substring(6)));
+				if (text.equals("topLeft:true")) {
+					hasTopLeft = true;
+				}
+				if (text.equals("topLeft:false")) {
+					hasTopLeft = false;
+				}
+				if (text.equals("bottomLeft:true")) {
+					hasBottomLeft = true;
+				}
+				if (text.equals("bottomLeft:false")) {
+					hasBottomLeft = false;
+				}
+				if (text.equals("topRight:true")) {
+					hasTopRight = true;
+				}
+				if (text.equals("topRight:false")) {
+					hasTopRight = false;
+				}
+				if (text.contains("bottomRight:true")) {
+//					System.out.println("Bottom Right=true");
+					hasBottomRight = true;
+				}
+				if (text.contains("bottomRight:false")) {
+//					System.out.println("Bottom Right=false");
+					hasBottomRight = false;
+				}
+//				if (text.startsWith("piece:"))
+//					return (Integer.parseInt(text.substring(6)));
 			}
 
 			br.close();
@@ -157,5 +182,25 @@ public class PlayerSave {
 
 	public static void setCurrentState(int state) {
 		currentState = state;
+	}
+
+	public static boolean getHasBottomLeft() {
+		// System.out.println("Bottom Left=" + hasBottomLeft);
+		return hasBottomLeft;
+	}
+
+	public static boolean getHasBottomRight() {
+		// System.out.println("Bottom Right=" + hasBottomRight);
+		return hasBottomRight;
+	}
+
+	public static boolean getHasTopLeft() {
+		// System.out.println("Top Left=" + hasTopLeft);
+		return hasTopLeft;
+	}
+
+	public static boolean getHasTopRight() {
+		// System.out.println("Top Right=" + hasTopRight);
+		return hasTopRight;
 	}
 }

@@ -6,8 +6,7 @@ import java.awt.Graphics2D;
 import com.dcman58.Handlers.Keys;
 import com.sun.prism.paint.Color;
 
-import javafx.scene.input.KeyCode;
-
+@SuppressWarnings("all")
 public class AboutState extends GameState {
 
 	private static Font titleFont = new Font("Arial", Font.BOLD, 25);
@@ -44,7 +43,7 @@ public class AboutState extends GameState {
 		g.drawString("run (kinda). Thanks for Playing my Creation!", 5, 30+60);
 		
 		g.setFont(titleFont);
-		g.drawString("Controlls", 10, 70 + 60);
+		g.drawString("Controls", 10, 70 + 60);
 		g.setFont(new Font("Arial", Font.PLAIN, 9));
 		g.drawString("[CONTROL + S] Screen Shot sent to your Desktop", 10, 80 + 60);
 		g.drawString("[LEFT Arrow Key] Move Left", 5, 90 + 60);

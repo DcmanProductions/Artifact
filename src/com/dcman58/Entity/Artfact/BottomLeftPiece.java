@@ -15,7 +15,7 @@ public class BottomLeftPiece extends MapObject {
 	public BottomLeftPiece(TileMap tm) {
 		super(tm);
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Other/Artifact.gif"));
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Other/Artifact.png"));
 			sprites = new BufferedImage[1];
 			width = height = 4;
 			sprites[0] = spritesheet.getSubimage(0, 10, 10, 10);

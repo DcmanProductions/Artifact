@@ -3,6 +3,7 @@ package com.dcman58.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
+@SuppressWarnings("all")
 public class FastRGB
 {
 

@@ -1,10 +1,9 @@
 package com.dcman58.GameState;
 
-import java.awt.Toolkit;
-
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Main.GamePanel;
 
+@SuppressWarnings("all")
 public class GameStateManager {
 
 	private GameState[] gameStates;
@@ -52,7 +51,7 @@ public class GameStateManager {
 		else if (state == LEVEL1CSTATE)
 			gameStates[state] = new Level1CState(this);
 		else if (state == LEVEL2ASTATE)
-			gameStates[state] = new Level2BState(this);
+			gameStates[state] = new Level2AState(this);
 		else if (state == LEVEL2BSTATE)
 			gameStates[state] = new Level2BState(this);
 		else if (state == ACIDSTATE)

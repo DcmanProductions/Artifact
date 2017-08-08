@@ -30,6 +30,7 @@ import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
 
+@SuppressWarnings("all")
 public class Level2AState extends GameState {
 
 	private Background sky;
@@ -67,9 +68,7 @@ public class Level2AState extends GameState {
 	}
 
 	public void init() {
-
-		System.out.println("Populating Enemies");
-		PlayerSave.Save(GameStateManager.LEVEL2ASTATE, PlayerSave.LoadArtifactHUD());
+		PlayerSave.Save(GameStateManager.LEVEL2ASTATE, PlayerSave.LoadArtifactHUD(), PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 
 		// backgrounds
 		sky = new Background("/Backgrounds/hellbg.png", 0);
@@ -82,17 +81,19 @@ public class Level2AState extends GameState {
 		tileMap.loadMap("/Maps/level2a.map");
 		// tileMap.loadMapImage("/Maps/Level2AMap.png");
 		tileMap.setPosition(140, 0);
-		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(),
-				tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
+		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(), tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
 		tileMap.setTween(1);
 
 		// player
 		player = new Player(tileMap);
-		// player.setPosition(73, 191);
-		player.setPosition(3700, 191);
+		 player.setPosition(73, 191);
+//		player.setPosition(3710, 191);
 		player.setHealth(PlayerSave.getHealth());
 		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
+
+		// Loads The Hud
+		hud = new HUD(player);
 
 		artifactPickupBL = new ArrayList<ArtifactPickupBottomLeft>();
 		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
@@ -112,9 +113,6 @@ public class Level2AState extends GameState {
 		// explosions
 		explosions = new ArrayList<Explosion>();
 
-		// hud
-		hud = new HUD(player);
-
 		// title and subtitle
 		try {
 			HellText = ImageIO.read(getClass().getResourceAsStream("/HUD/Hell.png"));
@@ -128,7 +126,7 @@ public class Level2AState extends GameState {
 
 		// teleport
 		teleport = new Teleport(tileMap);
-		teleport.setPosition(3700, 125);
+		teleport.setPosition(3700, 185);
 
 		// start event
 		eventStart = true;
@@ -227,27 +225,32 @@ public class Level2AState extends GameState {
 
 		ArtifactPickupBottomRight bottomRightArtifact;
 		bottomRightArtifact = new ArtifactPickupBottomRight(tileMap);
-		bottomRightArtifact.setPosition(3750, 191);
+		bottomRightArtifact.setPosition(3960, 191);
 
-		if (PlayerSave.LoadArtifactHUD() == 0) {
+		// if (PlayerSave.LoadArtifactHUD() == 0) {
+		// artifactPickupBR.add(bottomRightArtifact);
+		// // System.out.println("Adding Artifact Bottom Right");
+		// // artifactPickupBL.add(bottomLeftArtifact);
+		// // artifactPickupTL.add(topLeftArtifact);
+		// // artifactPickupTR.add(topRightArtifact);
+		// } else if (PlayerSave.LoadArtifactHUD() == 1) {
+		// // artifactPickupBR.add(bottomRightArtifact);
+		// // artifactPickupTL.add(topLeftArtifact);
+		// // artifactPickupTR.add(topRightArtifact);
+		// } else if (PlayerSave.LoadArtifactHUD() == 2) {
+		// // artifactPickupBR.add(bottomRightArtifact);
+		// // artifactPickupTR.add(topRightArtifact);
+		// } else if (PlayerSave.LoadArtifactHUD() == 3) {
+		// // artifactPickupBR.add(bottomRightArtifact);
+		// } else if (PlayerSave.LoadArtifactHUD() == 4) {
+		// return;
+		// } else {
+		// return;
+		// }
+
+		System.out.print("HasBottomRight:"+PlayerSave.getHasBottomRight());
+		if (!PlayerSave.getHasBottomRight()) {
 			artifactPickupBR.add(bottomRightArtifact);
-			System.out.println("Adding Artifact Bottom Right");
-			// artifactPickupBL.add(bottomLeftArtifact);
-			// artifactPickupTL.add(topLeftArtifact);
-			// artifactPickupTR.add(topRightArtifact);
-		} else if (PlayerSave.LoadArtifactHUD() == 1) {
-			// artifactPickupBR.add(bottomRightArtifact);
-			// artifactPickupTL.add(topLeftArtifact);
-			// artifactPickupTR.add(topRightArtifact);
-		} else if (PlayerSave.LoadArtifactHUD() == 2) {
-			// artifactPickupBR.add(bottomRightArtifact);
-			// artifactPickupTR.add(topRightArtifact);
-		} else if (PlayerSave.LoadArtifactHUD() == 3) {
-			// artifactPickupBR.add(bottomRightArtifact);
-		} else if (PlayerSave.LoadArtifactHUD() == 4) {
-			return;
-		} else {
-			return;
 		}
 
 	}
@@ -256,6 +259,10 @@ public class Level2AState extends GameState {
 
 		// check keys
 		handleInput();
+
+		PlayerSave.LoadArtifactHUD();
+		// System.out.println("Has Bottom Right=" +
+		// PlayerSave.getHasBottomRight());
 
 		// check if end of level event should start
 		if (teleport.contains(player)) {
@@ -266,9 +273,6 @@ public class Level2AState extends GameState {
 		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
 			eventDead = blockInput = true;
 		}
-
-		// System.out.println("Player Location: X:" + player.getx() + " Y: " +
-		// player.gety());
 
 		// play events
 		if (eventStart)
@@ -303,10 +307,11 @@ public class Level2AState extends GameState {
 		tileMap.fixBounds();
 
 		if (PlayerSave.LoadArtifactHUD() == 1) {
-			hud.showTopLeft = true;
+			hud.showBottomRight = true;
 		}
-		System.out.println("BottomLeft=" + hud.showBottomLeft + "\nBottomRight=" + hud.showBottomRight + "TopLeft="
-				+ hud.showTopLeft + "\nTopRight=" + hud.showTopRight);
+		// System.out.println("BottomLeft=" + hud.showBottomLeft +
+		// "\nBottomRight=" + hud.showBottomRight + "\nTopLeft=" +
+		// hud.showTopLeft + "\nTopRight=" + hud.showTopRight);
 
 		// update enemies
 		for (int i = 0; i < enemies.size(); i++) {
@@ -337,12 +342,17 @@ public class Level2AState extends GameState {
 				i--;
 			}
 		}
-		if (player.intersects(new Rectangle(3750, 191, 32, 32)) && !artifactPickupBR.isEmpty()
-				&& !hud.showBottomRight) {
+		if (PlayerSave.getHasBottomRight()) {
+			// System.out.println("In has Bottom Rights = " +
+			// PlayerSave.getHasBottomRight());
+			hud.showBottomRight = true;
+		}
+
+		if (player.intersects(new Rectangle(3960, 191, 32, 32)) && !artifactPickupBR.isEmpty() && !hud.showBottomRight) {
 			System.out.println("interact reached");
 			hud.showBottomRight = true;
 			PlayerSave.hasBottomRight = true;
-			PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 1);
+			PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 1,PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 			System.out.println("Collected Bottom Right");
 			artifactPickupBR.remove(0);
 		}
@@ -353,7 +363,6 @@ public class Level2AState extends GameState {
 	}
 
 	public void draw(Graphics2D g) {
-
 		// draw background
 		sky.draw(g);
 

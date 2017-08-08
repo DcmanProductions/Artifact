@@ -8,9 +8,9 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
-import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 
+@SuppressWarnings("all")
 public class AcidState extends GameState {
 
 	private float hue;

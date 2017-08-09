@@ -1,4 +1,4 @@
-package com.dcman58.Entity;
+package com.dcman58.Entity.Boss;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import com.dcman58.Enemies.DarkEnergy;
+import com.dcman58.Entity.Enemy;
+import com.dcman58.Entity.Explosion;
+import com.dcman58.Entity.Player;
 import com.dcman58.TileMap.TileMap;
 
 public class Spirit extends Enemy {

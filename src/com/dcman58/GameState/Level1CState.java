@@ -13,11 +13,11 @@ import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Portal;
-import com.dcman58.Entity.Spirit;
 import com.dcman58.Entity.Artfact.BottomLeftPiece;
 import com.dcman58.Entity.Artfact.BottomRightPiece;
 import com.dcman58.Entity.Artfact.TopLeftPiece;
 import com.dcman58.Entity.Artfact.TopRightPiece;
+import com.dcman58.Entity.Boss.Spirit;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -68,7 +68,7 @@ public class Level1CState extends GameState {
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
 		tileMap.loadMap("/Maps/level1c.map");
-		tileMap.setPosition(140, 0);
+		tileMap.setPosition(0, 0);
 		tileMap.setTween(1);
 		
 		// player
@@ -282,7 +282,7 @@ public class Level1CState extends GameState {
 			tb.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
 			if(!portal.isOpened()) tileMap.setShaking(true, 10);
-			JukeBox.stop("level1");
+			JukeBox.stop("level1B");
 		}
 		if(eventCount > 1 && eventCount < 60) {
 			tb.get(0).height -= 4;
@@ -348,6 +348,7 @@ public class Level1CState extends GameState {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
+			JukeBox.stop("level1boss");
 			gsm.setState(GameStateManager.ACIDSTATE);
 		}
 		

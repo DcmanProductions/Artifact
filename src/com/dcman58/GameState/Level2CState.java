@@ -2,45 +2,36 @@ package com.dcman58.GameState;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-
 import com.dcman58.Audio.JukeBox;
-import com.dcman58.Enemies.Gazer;
-import com.dcman58.Enemies.GelPop;
-import com.dcman58.Enemies.Tengu;
+import com.dcman58.Enemies.DarkEnergy;
+import com.dcman58.Entity.ArtifactPickupTopLeft;
 import com.dcman58.Entity.Enemy;
-import com.dcman58.Entity.EnemyProjectile;
 import com.dcman58.Entity.EnergyParticle;
 import com.dcman58.Entity.Explosion;
 import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
-import com.dcman58.Entity.Teleport;
-import com.dcman58.Entity.Title;
+import com.dcman58.Entity.Boss.God;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
-
-public class Level1BState extends GameState {
+@SuppressWarnings("all")
+public class Level2CState extends GameState {
 
 	private Background temple;
 
 	private Player player;
 	private TileMap tileMap;
 	private ArrayList<Enemy> enemies;
-	private ArrayList<EnemyProjectile> eprojectiles;
 	private ArrayList<EnergyParticle> energyParticles;
 	private ArrayList<Explosion> explosions;
 
 	private HUD hud;
-	private BufferedImage hageonText;
-	private Title title;
-	private Title subtitle;
-	private Teleport teleport;
+	ArrayList<ArtifactPickupTopLeft> artifactPickupTL;
+	private God god;
 
 	// events
 	private boolean blockInput = false;
@@ -49,9 +40,11 @@ public class Level1BState extends GameState {
 	private ArrayList<Rectangle> tb;
 	private boolean eventFinish;
 	private boolean eventDead;
-	private boolean eventQuake;
+	private boolean eventPortal;
+	private boolean flash;
+	private boolean eventBossDead;
 
-	public Level1BState(GameStateManager gsm) {
+	public Level2CState(GameStateManager gsm) {
 		super(gsm);
 		init();
 	}
@@ -59,55 +52,40 @@ public class Level1BState extends GameState {
 	public void init() {
 
 		// backgrounds
-		temple = new Background("/Backgrounds/temple.gif", 0.5, 0);
+		temple = new Background("/Backgrounds/Stars.png", 0.5, 0);
 
 		// tilemap
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
-		tileMap.loadMap("/Maps/level1b.map");
+		tileMap.loadTiles("/Tilesets/heaventileset.png");
+		tileMap.loadMap("/Maps/level2c.map");
 		tileMap.setPosition(140, 0);
 		tileMap.setTween(1);
 
 		// player
 		player = new Player(tileMap);
-		player.setPosition(300, 131);
-		player.setHealth(PlayerSave.getHealth());
-		player.setLives(PlayerSave.getLives());
+		player.setPosition(50, 190);
+		player.setHealth(PlayerSave.getHealth() + 4);
+		player.setLives(PlayerSave.getLives() + 1);
 		player.setTime(PlayerSave.getTime());
+
+		// explosions
+		explosions = new ArrayList<Explosion>();
 
 		// enemies
 		enemies = new ArrayList<Enemy>();
-		eprojectiles = new ArrayList<EnemyProjectile>();
 		populateEnemies();
 
 		// energy particle
 		energyParticles = new ArrayList<EnergyParticle>();
 
+		// init player
 		player.init(enemies, energyParticles);
-
-		// explosions
-		explosions = new ArrayList<Explosion>();
 
 		// hud
 		hud = new HUD(player);
 
-		// title and subtitle
-		try {
-			hageonText = ImageIO.read(getClass().getResourceAsStream("/HUD/UnderGroundTemple.png"));
-			title = new Title(hageonText.getSubimage(0, 0, 178, 20));
-			title.sety(60);
-			subtitle = new Title(hageonText.getSubimage(0, 21, 91, 25));
-			subtitle.sety(85);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		// teleport
-		teleport = new Teleport(tileMap);
-		teleport.setPosition(2850, 371);
-
 		// start event
-		eventStart = true;
+		eventStart = blockInput = true;
 		tb = new ArrayList<Rectangle>();
 		eventStart();
 
@@ -117,68 +95,16 @@ public class Level1BState extends GameState {
 		JukeBox.load("/SFX/enemyhit.mp3", "enemyhit");
 
 		// music
-		JukeBox.load("/Music/level1v2.mp3", "level1B");
-		JukeBox.loop("level1B", 600, JukeBox.getFrames("level1B") - 2200);
+		JukeBox.load("/Music/level1boss.mp3", "level1boss");
+		JukeBox.load("/Music/fanfare.mp3", "fanfare");
 
 	}
 
 	private void populateEnemies() {
 		enemies.clear();
-		GelPop gp;
-		Gazer g;
-		Tengu t;
-
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(750, 100);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(900, 150);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(1320, 250);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(1570, 160);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(1590, 160);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(2600, 370);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(2620, 370);
-		enemies.add(gp);
-		gp = new GelPop(tileMap, player);
-		gp.setPosition(2640, 370);
-		enemies.add(gp);
-
-		g = new Gazer(tileMap);
-		g.setPosition(904, 130);
-		enemies.add(g);
-		g = new Gazer(tileMap);
-		g.setPosition(1080, 270);
-		enemies.add(g);
-		g = new Gazer(tileMap);
-		g.setPosition(1200, 270);
-		enemies.add(g);
-		g = new Gazer(tileMap);
-		g.setPosition(1704, 300);
-		enemies.add(g);
-
-		t = new Tengu(tileMap, player, enemies);
-		t.setPosition(1900, 580);
-		enemies.add(t);
-		t = new Tengu(tileMap, player, enemies);
-		t.setPosition(2330, 550);
-		enemies.add(t);
-		t = new Tengu(tileMap, player, enemies);
-		t.setPosition(2400, 490);
-		enemies.add(t);
-		t = new Tengu(tileMap, player, enemies);
-		t.setPosition(2457, 430);
-		enemies.add(t);
-
+		god = new God(tileMap, player, enemies, explosions);
+		god.setPosition(-9000, 9000);
+		enemies.add(god);
 	}
 
 	public void update() {
@@ -186,14 +112,25 @@ public class Level1BState extends GameState {
 		// check keys
 		handleInput();
 
-		// check if quake event should start
-		if (player.getx() > 2175 && !tileMap.isShaking()) {
-			eventQuake = blockInput = true;
+		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
+		ArtifactPickupTopLeft topLeftArtifact = new ArtifactPickupTopLeft(tileMap);
+		topLeftArtifact.setPosition(50, 190);
+		// check if boss dead event should start
+		if (!eventFinish && god.isDead()) {
+			artifactPickupTL.add(topLeftArtifact);
+			if(player.intersects(topLeftArtifact)){
+				System.out.println("interact reached");
+				hud.showTopLeft = true;
+				PlayerSave.hasTopLeft = true;
+				PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 3, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+				System.out.println("Collected Top Left");
+				artifactPickupTL.remove(0);
+			}
 		}
 
-		// check if end of level event should start
-		if (teleport.contains(player)) {
-			eventFinish = blockInput = true;
+		// check if player dead event should start
+		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
+			eventDead = blockInput = true;
 		}
 
 		// play events
@@ -201,31 +138,18 @@ public class Level1BState extends GameState {
 			eventStart();
 		if (eventDead)
 			eventDead();
-		if (eventQuake)
-			eventQuake();
 		if (eventFinish)
 			eventFinish();
-
-		// move title and subtitle
-		if (title != null) {
-			title.update();
-			if (title.shouldRemove())
-				title = null;
-		}
-		if (subtitle != null) {
-			subtitle.update();
-			if (subtitle.shouldRemove())
-				subtitle = null;
-		}
+		if (eventPortal)
+			eventPortal();
+		if (eventBossDead)
+			eventBossDead();
 
 		// move backgrounds
 		temple.setPosition(tileMap.getx(), tileMap.gety());
 
 		// update player
 		player.update();
-		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
-			eventDead = blockInput = true;
-		}
 
 		// update tilemap
 		tileMap.setPosition(GamePanel.WIDTH / 2 - player.getx(), GamePanel.HEIGHT / 2 - player.gety());
@@ -236,20 +160,10 @@ public class Level1BState extends GameState {
 		for (int i = 0; i < enemies.size(); i++) {
 			Enemy e = enemies.get(i);
 			e.update();
-			if (e.isDead()) {
+			if (e.isDead() || e.shouldRemove()) {
 				enemies.remove(i);
 				i--;
 				explosions.add(new Explosion(tileMap, e.getx(), e.gety()));
-			}
-		}
-
-		// update enemy projectiles
-		for (int i = 0; i < eprojectiles.size(); i++) {
-			EnemyProjectile ep = eprojectiles.get(i);
-			ep.update();
-			if (ep.shouldRemove()) {
-				eprojectiles.remove(i);
-				i--;
 			}
 		}
 
@@ -261,9 +175,6 @@ public class Level1BState extends GameState {
 				i--;
 			}
 		}
-
-		// update teleport
-		teleport.update();
 
 	}
 
@@ -280,11 +191,6 @@ public class Level1BState extends GameState {
 			enemies.get(i).draw(g);
 		}
 
-		// draw enemy projectiles
-		for (int i = 0; i < eprojectiles.size(); i++) {
-			eprojectiles.get(i).draw(g);
-		}
-
 		// draw explosions
 		for (int i = 0; i < explosions.size(); i++) {
 			explosions.get(i).draw(g);
@@ -293,22 +199,22 @@ public class Level1BState extends GameState {
 		// draw player
 		player.draw(g);
 
-		// draw teleport
-		teleport.draw(g);
-
 		// draw hud
 		hud.draw(g);
-
-		// draw title
-		if (title != null)
-			title.draw(g);
-		if (subtitle != null)
-			subtitle.draw(g);
 
 		// draw transition boxes
 		g.setColor(java.awt.Color.BLACK);
 		for (int i = 0; i < tb.size(); i++) {
 			g.fill(tb.get(i));
+		}
+		if (!eventFinish && god.isDead()) {
+			artifactPickupTL.get(0).draw(g);
+		}
+
+		// flash
+		if (flash) {
+			g.setColor(java.awt.Color.WHITE);
+			g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 		}
 
 	}
@@ -336,19 +242,12 @@ public class Level1BState extends GameState {
 
 	// reset level
 	private void reset() {
-		player.loseLife();
 		player.reset();
-		player.setPosition(300, 131);
+		player.setPosition(50, 190);
 		populateEnemies();
-		blockInput = true;
+		eventStart = blockInput = true;
 		eventCount = 0;
-		tileMap.setShaking(false, 0);
-		eventStart = true;
 		eventStart();
-		title = new Title(hageonText.getSubimage(0, 0, 178, 20));
-		title.sety(60);
-		subtitle = new Title(hageonText.getSubimage(0, 33, 91, 13));
-		subtitle.sety(85);
 	}
 
 	// level started
@@ -360,7 +259,7 @@ public class Level1BState extends GameState {
 			tb.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
 			tb.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
-			JukeBox.stop("level1");
+			JukeBox.stop("level2");
 		}
 		if (eventCount > 1 && eventCount < 60) {
 			tb.get(0).height -= 4;
@@ -368,21 +267,22 @@ public class Level1BState extends GameState {
 			tb.get(2).y += 4;
 			tb.get(3).x += 6;
 		}
-		if (eventCount == 30)
-			title.begin();
 		if (eventCount == 60) {
 			eventStart = blockInput = false;
 			eventCount = 0;
-			subtitle.begin();
+			eventPortal = blockInput = true;
 			tb.clear();
+
 		}
 	}
 
 	// player has died
 	private void eventDead() {
 		eventCount++;
-		if (eventCount == 1)
+		if (eventCount == 1) {
 			player.setDead();
+			player.stop();
+		}
 		if (eventCount == 60) {
 			tb.clear();
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2, 0, 0));
@@ -398,31 +298,9 @@ public class Level1BState extends GameState {
 			} else {
 				eventDead = blockInput = false;
 				eventCount = 0;
+				player.loseLife();
 				reset();
 			}
-		}
-	}
-
-	// earthquake
-	private void eventQuake() {
-		eventCount++;
-		if (eventCount == 1) {
-			player.stop();
-			player.setPosition(2175, player.gety());
-		}
-		if (eventCount == 60) {
-			player.setEmote(Player.CONFUSED);
-		}
-		if (eventCount == 120)
-			player.setEmote(Player.NONE);
-		if (eventCount == 150)
-			tileMap.setShaking(true, 10);
-		if (eventCount == 180)
-			player.setEmote(Player.SURPRISED);
-		if (eventCount == 300) {
-			player.setEmote(Player.NONE);
-			eventQuake = blockInput = false;
-			eventCount = 0;
 		}
 	}
 
@@ -430,26 +308,90 @@ public class Level1BState extends GameState {
 	private void eventFinish() {
 		eventCount++;
 		if (eventCount == 1) {
-			JukeBox.play("teleport");
-			player.setTeleporting(true);
-			player.stop();
-		} else if (eventCount == 120) {
 			tb.clear();
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2, 0, 0));
-		} else if (eventCount > 120) {
+		} else if (eventCount > 1) {
 			tb.get(0).x -= 6;
 			tb.get(0).y -= 4;
 			tb.get(0).width += 12;
 			tb.get(0).height += 8;
-			JukeBox.stop("teleport");
 		}
-		if (eventCount == 180) {
+		if (eventCount == 60) {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
-			gsm.setState(GameStateManager.LEVEL1CSTATE);
+			JukeBox.stop("level1boss");
+			gsm.setState(GameStateManager.ACIDSTATE);
 		}
 
+	}
+
+	private void eventPortal() {
+		eventCount++;
+		if (eventCount == 1) {
+			
+		}
+		if (eventCount > 60 && eventCount < 180) {
+			energyParticles.add(new EnergyParticle(tileMap, 157, 107, (int) (Math.random() * 4)));
+		}
+		if (eventCount >= 160 && eventCount <= 180) {
+			if (eventCount % 4 == 0 || eventCount % 4 == 1)
+				flash = true;
+			else
+				flash = false;
+		}
+		if (eventCount == 181) {
+			tileMap.setShaking(false, 0);
+			flash = false;
+			player.setEmote(Player.SURPRISED);
+		}
+		if (eventCount == 240) {
+		}
+		if (eventCount == 300) {
+			player.setEmote(Player.NONE);
+		}
+		if (eventCount == 360) {
+			flash = true;
+			god.setPosition(160, 160);
+			DarkEnergy de;
+			for (int i = 0; i < 20; i++) {
+				de = new DarkEnergy(tileMap);
+				de.setPosition(160, 160);
+				de.setVector(Math.random() * 10 - 5, Math.random() * -2 - 3);
+				enemies.add(de);
+			}
+		}
+		if (eventCount == 362) {
+			flash = false;
+			JukeBox.loop("level1boss", 0, 60000, JukeBox.getFrames("level1boss") - 4000);
+		}
+		if (eventCount == 420) {
+			eventPortal = blockInput = false;
+			eventCount = 0;
+			god.setActive();
+		}
+
+	}
+
+	public void eventBossDead() {
+		eventCount++;
+		if (eventCount == 1) {
+			player.stop();
+			JukeBox.stop("level1boss");
+			enemies.clear();
+		}
+		if (eventCount <= 120 && eventCount % 15 == 0) {
+			explosions.add(new Explosion(tileMap, god.getx(), god.gety()));
+			JukeBox.play("explode");
+		}
+		if (eventCount == 180) {
+			JukeBox.play("fanfare");
+		}
+		if (eventCount == 390) {
+			eventBossDead = false;
+			eventCount = 0;
+			eventFinish = true;
+		}
 	}
 
 }

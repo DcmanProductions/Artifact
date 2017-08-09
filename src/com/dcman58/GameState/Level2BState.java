@@ -65,7 +65,7 @@ public class Level2BState extends GameState {
 	}
 
 	public void init() {
-		PlayerSave.Save(GameStateManager.LEVEL2BSTATE, PlayerSave.LoadArtifactHUD(), PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+		PlayerSave.Save(GameStateManager.LEVEL2ASTATE, PlayerSave.LoadArtifactHUD(), PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 
 		// backgrounds
 		sky = new Background("/Backgrounds/Stars.png", 0);
@@ -111,9 +111,9 @@ public class Level2BState extends GameState {
 		// title and subtitle
 		try {
 			HeavenText = ImageIO.read(getClass().getResourceAsStream("/HUD/HeavenHUD.png"));
-			title = new Title(HeavenText.getSubimage(0, 0, 260, 35));
+			title = new Title(HeavenText.getSubimage(0, 0, 300, 35));
 			title.sety(60);
-			subtitle = new Title(HeavenText.getSubimage(0, 30, 150, 40));
+			subtitle = new Title(HeavenText.getSubimage(0, 36, 260, 30));
 			subtitle.sety(85);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -134,7 +134,6 @@ public class Level2BState extends GameState {
 		JukeBox.load("/SFX/enemyhit.mp3", "enemyhit");
 
 		// music
-		JukeBox.close("level1");
 		JukeBox.load("/Music/level1v2.mp3", "level2");
 		JukeBox.loop("level2", 600, JukeBox.getFrames("level2") - 2200);
 
@@ -148,9 +147,49 @@ public class Level2BState extends GameState {
 		DarkEnergy de;
 		Tengu t;
 
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(3749, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(1247, 101);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(1247, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(1786, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(1738, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(2684, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(3373, 191);
+		enemies.add(gp);
+
+		gp = new GelPop(tileMap, player);
+		gp.setPosition(3337, 191);
+		enemies.add(gp);
+
+		g = new Gazer(tileMap);
+		g.setPosition(2071, 101);
+		enemies.add(g);
+
+		g = new Gazer(tileMap);
+		g.setPosition(3075, 101);
+		enemies.add(g);
+
 		ArtifactPickupBottomLeft bottomLeftArtifact;
 		bottomLeftArtifact = new ArtifactPickupBottomLeft(tileMap);
-		bottomLeftArtifact.setPosition(3974, 191);
+		bottomLeftArtifact.setPosition(1131, 191);
 
 		if (!PlayerSave.getHasBottomLeft()) {
 			artifactPickupBL.add(bottomLeftArtifact);
@@ -164,11 +203,9 @@ public class Level2BState extends GameState {
 		handleInput();
 
 		PlayerSave.LoadArtifactHUD();
-		// System.out.println("Has Bottom Right=" +
-		// PlayerSave.getHasBottomRight());
 
 		// check if end of level event should start
-		if (teleport.contains(player)) {
+		if (player.intersects(teleport)) {
 			eventFinish = blockInput = true;
 		}
 
@@ -177,8 +214,7 @@ public class Level2BState extends GameState {
 			eventDead = blockInput = true;
 		}
 
-		// System.out.println("Player Location: X:" + player.getx() + " Y: " +
-		// player.gety());
+		System.out.println("Player Location: X:" + player.getx() + " Y: " + player.gety());
 
 		// play events
 		if (eventStart)
@@ -211,13 +247,6 @@ public class Level2BState extends GameState {
 		tileMap.setPosition(GamePanel.WIDTH / 2 - player.getx(), GamePanel.HEIGHT / 2 - player.gety());
 		tileMap.update();
 		tileMap.fixBounds();
-
-		if (PlayerSave.LoadArtifactHUD() == 1) {
-			hud.showBottomRight = true;
-		}
-		// System.out.println("BottomLeft=" + hud.showBottomLeft +
-		// "\nBottomRight=" + hud.showBottomRight + "\nTopLeft=" +
-		// hud.showTopLeft + "\nTopRight=" + hud.showTopRight);
 
 		// update enemies
 		for (int i = 0; i < enemies.size(); i++) {
@@ -254,7 +283,7 @@ public class Level2BState extends GameState {
 			hud.showBottomRight = true;
 		}
 
-		if (player.intersects(new Rectangle(3974, 191, 32, 32)) && !artifactPickupBL.isEmpty() && !hud.showBottomLeft) {
+		if (player.intersects(new Rectangle(1131, 191, 32, 32)) && !artifactPickupBL.isEmpty() && !hud.showBottomLeft) {
 			System.out.println("interact reached");
 			hud.showBottomLeft = true;
 			PlayerSave.hasBottomLeft = true;
@@ -362,6 +391,7 @@ public class Level2BState extends GameState {
 			tb.add(new Rectangle(0, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
 			tb.add(new Rectangle(0, GamePanel.HEIGHT / 2, GamePanel.WIDTH, GamePanel.HEIGHT / 2));
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, 0, GamePanel.WIDTH / 2, GamePanel.HEIGHT));
+			JukeBox.stop("level1");
 		}
 		if (eventCount > 1 && eventCount < 60) {
 			tb.get(0).height -= 4;
@@ -428,7 +458,8 @@ public class Level2BState extends GameState {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
-			gsm.setState(GameStateManager.LEVEL2BSTATE);
+			JukeBox.stop("level2");
+			gsm.setState(GameStateManager.LEVEL2CSTATE);
 		}
 
 	}

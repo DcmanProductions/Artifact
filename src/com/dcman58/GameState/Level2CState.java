@@ -18,10 +18,11 @@ import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
+
 @SuppressWarnings("all")
 public class Level2CState extends GameState {
 
-	private Background temple;
+	private Background background;
 
 	private Player player;
 	private TileMap tileMap;
@@ -52,7 +53,9 @@ public class Level2CState extends GameState {
 	public void init() {
 
 		// backgrounds
-		temple = new Background("/Backgrounds/Stars.png", 0.5, 0);
+		background = new Background("/Backgrounds/Stars.png", 0.5, 0);
+
+		PlayerSave.LoadArtifactHUD();
 
 		// tilemap
 		tileMap = new TileMap(30);
@@ -112,25 +115,31 @@ public class Level2CState extends GameState {
 		// check keys
 		handleInput();
 
-		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
-		ArtifactPickupTopLeft topLeftArtifact = new ArtifactPickupTopLeft(tileMap);
-		topLeftArtifact.setPosition(50, 190);
-		// check if boss dead event should start
-		if (!eventFinish && god.isDead()) {
-			artifactPickupTL.add(topLeftArtifact);
-			if(player.intersects(topLeftArtifact)){
-				System.out.println("interact reached");
-				hud.showTopLeft = true;
-				PlayerSave.hasTopLeft = true;
-				PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 3, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
-				System.out.println("Collected Top Left");
-				artifactPickupTL.remove(0);
-			}
-		}
+		// System.out.println("X:"+player.getx()+" Y:"+player.gety());
+
+//		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
+//		ArtifactPickupTopLeft topLeftArtifact = new ArtifactPickupTopLeft(tileMap);
+//		topLeftArtifact.setPosition(159, 190);
+//		// check if boss dead event should start
+//		System.out.println("Showing Top Left");
+//		artifactPickupTL.add(topLeftArtifact);
+//		if (player.intersects(topLeftArtifact)) {
+//			System.out.println("interact reached");
+//			hud.showTopLeft = true;
+//			PlayerSave.hasTopLeft = true;
+//			PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 3, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+//			artifactPickupTL.remove(0);
+//			if (eventBossDead) {
+//			}
+//		}
 
 		// check if player dead event should start
 		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
 			eventDead = blockInput = true;
+		}
+		
+		if(god.isDead()){
+			eventBossDead = true;
 		}
 
 		// play events
@@ -146,7 +155,7 @@ public class Level2CState extends GameState {
 			eventBossDead();
 
 		// move backgrounds
-		temple.setPosition(tileMap.getx(), tileMap.gety());
+		background.setPosition(tileMap.getx(), tileMap.gety());
 
 		// update player
 		player.update();
@@ -181,7 +190,7 @@ public class Level2CState extends GameState {
 	public void draw(Graphics2D g) {
 
 		// draw background
-		temple.draw(g);
+		background.draw(g);
 
 		// draw tilemap
 		tileMap.draw(g);
@@ -207,9 +216,7 @@ public class Level2CState extends GameState {
 		for (int i = 0; i < tb.size(); i++) {
 			g.fill(tb.get(i));
 		}
-		if (!eventFinish && god.isDead()) {
-			artifactPickupTL.get(0).draw(g);
-		}
+//		artifactPickupTL.get(0).draw(g);
 
 		// flash
 		if (flash) {
@@ -321,7 +328,7 @@ public class Level2CState extends GameState {
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
 			JukeBox.stop("level1boss");
-			gsm.setState(GameStateManager.ACIDSTATE);
+			gsm.setState(GameStateManager.MENUSTATE);
 		}
 
 	}
@@ -329,7 +336,7 @@ public class Level2CState extends GameState {
 	private void eventPortal() {
 		eventCount++;
 		if (eventCount == 1) {
-			
+
 		}
 		if (eventCount > 60 && eventCount < 180) {
 			energyParticles.add(new EnergyParticle(tileMap, 157, 107, (int) (Math.random() * 4)));
@@ -375,6 +382,8 @@ public class Level2CState extends GameState {
 
 	public void eventBossDead() {
 		eventCount++;
+		PlayerSave.hasTopLeft = true;
+		PlayerSave.Save(7, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 		if (eventCount == 1) {
 			player.stop();
 			JukeBox.stop("level1boss");

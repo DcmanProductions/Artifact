@@ -56,7 +56,7 @@ public class God extends Enemy {
 		cwidth = 30;
 		cheight = 30;
 
-		health = maxHealth = 4;
+		health = maxHealth = 10;
 
 		moveSpeed = 1.4;
 
@@ -90,7 +90,13 @@ public class God extends Enemy {
 
 		if (health == 0)
 			return;
-
+		
+		for(int i = 0;i<enemies.size();i++){
+			if(enemies.get(i).isDead()){
+				this.health--;
+			}
+		}
+		
 		// restart attack pattern
 		if (step == steps.length) {
 			step = 0;

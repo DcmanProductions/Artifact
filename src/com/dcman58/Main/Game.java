@@ -1,5 +1,4 @@
 package com.dcman58.Main;
-
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -13,7 +12,7 @@ public class Game {
 //	public static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
 	public static JFrame window;
-
+public com.dcman58.Main.Game game;
 	public static void main(String[] args) {
 		window = new JFrame("Artifact: The Journey Unraveled");
 		window.add(new GamePanel());

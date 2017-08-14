@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-import com.dcman58.Enemies.DarkEnergy;
 import com.dcman58.Enemies.Gazer;
 import com.dcman58.Enemies.GelPop;
 import com.dcman58.Enemies.Tengu;
@@ -17,7 +16,8 @@ import com.dcman58.Entity.Explosion;
 import com.dcman58.Entity.Player;
 import com.dcman58.TileMap.TileMap;
 
-public class God extends Enemy {
+@SuppressWarnings("all")
+public class Satan extends Enemy {
 
 	public BufferedImage[] sprites;
 	private Player player;
@@ -44,7 +44,7 @@ public class God extends Enemy {
 	private Gazer[] shield;
 	private double ticks;
 
-	public God(TileMap tm, Player p, ArrayList<Enemy> enemies, ArrayList<Explosion> explosions) {
+	public Satan(TileMap tm, Player p, ArrayList<Enemy> enemies, ArrayList<Explosion> explosions) {
 
 		super(tm);
 		player = p;
@@ -56,12 +56,12 @@ public class God extends Enemy {
 		cwidth = 30;
 		cheight = 30;
 
-		health = maxHealth = 10;
+		health = maxHealth = 200;
 
 		moveSpeed = 1.4;
 
 		try {
-			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/God.png"));
+			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Enemies/Satan.png"));
 			sprites = new BufferedImage[4];
 			for (int i = 0; i < sprites.length; i++) {
 				sprites[i] = spritesheet.getSubimage(i * width, 0, width, height);
@@ -87,16 +87,11 @@ public class God extends Enemy {
 	}
 
 	public void update() {
-
+		Tengu t;
+		GelPop gp;
 		if (health == 0)
 			return;
-		
-		for(int i = 0;i<enemies.size();i++){
-			if(enemies.get(i).isDead()){
-				this.health--;
-			}
-		}
-		
+
 		// restart attack pattern
 		if (step == steps.length) {
 			step = 0;
@@ -155,13 +150,13 @@ public class God extends Enemy {
 				explosions.add(new Explosion(tileMap, (int) x, (int) y));
 			}
 			if (stepCount >= 90 && stepCount % 30 == 0) {
-				GelPop gp = new GelPop(tileMap, player);
+				gp = new GelPop(tileMap, player);
 				gp.setPosition(x, y);
 				gp.setVector(3 * Math.sin(stepCount / 32), 3 * Math.cos(stepCount / 32));
 				enemies.add(gp);
 			}
 			if (stepCount == 90) {
-				Tengu t = new Tengu(tileMap, player, enemies);
+				t = new Tengu(tileMap, player, enemies);
 				t.setPosition(x, y);
 				t.setVector(3 * Math.sin(stepCount / 32), 3 * Math.cos(stepCount / 32));
 				enemies.add(t);
@@ -193,7 +188,7 @@ public class God extends Enemy {
 				}
 			}
 			if (stepCount % 60 == 0) {
-				GelPop gp = new GelPop(tileMap, player);
+				gp = new GelPop(tileMap, player);
 				gp.setPosition(x, y);
 				int dir = Math.random() < 0.5 ? 1 : -1;
 				gp.setVector(dir, 0);
@@ -225,7 +220,7 @@ public class God extends Enemy {
 				}
 			}
 			if (stepCount % 60 == 0) {
-				Tengu t = new Tengu(tileMap, player, enemies);
+				t = new Tengu(tileMap, player, enemies);
 				t.setPosition(x, y);
 				int dir = Math.random() < 0.5 ? 1 : -1;
 				t.setVector(dir, 0);
@@ -252,18 +247,27 @@ public class God extends Enemy {
 				dy = 0;
 			}
 			if (stepCount > 60 && stepCount < 120 && stepCount % 5 == 0 && dy == 0) {
-				DarkEnergy de = new DarkEnergy(tileMap);
-				de.setPosition(x, y);
-				de.setVector(-3, 0);
-				enemies.add(de);
-				de = new DarkEnergy(tileMap);
-				de.setPosition(x, y);
-				de.setVector(3, 0);
-				enemies.add(de);
+				gp = new GelPop(tileMap, player);
+				gp.setPosition(x, y);
+				gp.setVector(-3, 0);
+				enemies.add(gp);
+				gp = new GelPop(tileMap, player);
+				gp.setPosition(x, y);
+				gp.setVector(3, 0);
+				enemies.add(gp);
 			}
 			if (stepCount == 120) {
 				stepCount = 0;
 				step++;
+			}
+		}
+		t = new Tengu(tileMap, player, enemies);
+		gp = new GelPop(tileMap, player);
+		for (int i = 0; i < enemies.size(); i++) {
+			if (enemies.get(i).isDead() && enemies.get(i).toString().contains("com.dcman58.Enemies.GelPop")) {
+				this.health -= 1;
+			} else if (enemies.get(i).isDead()&& enemies.get(i).toString().contains("com.dcman58.Enemies.Tengu")) {
+				this.health -= 4;
 			}
 		}
 

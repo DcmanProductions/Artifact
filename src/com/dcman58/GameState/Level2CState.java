@@ -13,7 +13,7 @@ import com.dcman58.Entity.Explosion;
 import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
-import com.dcman58.Entity.Boss.God;
+import com.dcman58.Entity.Boss.Satan;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -32,7 +32,7 @@ public class Level2CState extends GameState {
 
 	private HUD hud;
 	ArrayList<ArtifactPickupTopLeft> artifactPickupTL;
-	private God god;
+	private Satan god;
 
 	// events
 	private boolean blockInput = false;
@@ -105,7 +105,7 @@ public class Level2CState extends GameState {
 
 	private void populateEnemies() {
 		enemies.clear();
-		god = new God(tileMap, player, enemies, explosions);
+		god = new Satan(tileMap, player, enemies, explosions);
 		god.setPosition(-9000, 9000);
 		enemies.add(god);
 	}
@@ -383,7 +383,7 @@ public class Level2CState extends GameState {
 	public void eventBossDead() {
 		eventCount++;
 		PlayerSave.hasTopLeft = true;
-		PlayerSave.Save(7, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+		PlayerSave.Save(5, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 		if (eventCount == 1) {
 			player.stop();
 			JukeBox.stop("level1boss");

@@ -113,7 +113,7 @@ public class Level2BState extends GameState {
 			HeavenText = ImageIO.read(getClass().getResourceAsStream("/HUD/HeavenHUD.png"));
 			title = new Title(HeavenText.getSubimage(0, 0, 300, 35));
 			title.sety(60);
-			subtitle = new Title(HeavenText.getSubimage(0, 36, 260, 30));
+			subtitle = new Title(HeavenText.getSubimage(0, 36, 300, 30));
 			subtitle.sety(85);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -201,6 +201,8 @@ public class Level2BState extends GameState {
 
 		// check keys
 		handleInput();
+		
+		
 
 		PlayerSave.LoadArtifactHUD();
 
@@ -214,7 +216,7 @@ public class Level2BState extends GameState {
 			eventDead = blockInput = true;
 		}
 
-		System.out.println("Player Location: X:" + player.getx() + " Y: " + player.gety());
+//		System.out.println("Player Location: X:" + player.getx() + " Y: " + player.gety());
 
 		// play events
 		if (eventStart)

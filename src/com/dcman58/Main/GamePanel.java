@@ -27,7 +27,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	// public static int HEIGHT =
 	// Toolkit.getDefaultToolkit().getScreenSize().height;
 	// public static int SCALE=4;
-	public static int SCALE = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 1080 && Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1920) ? 4 : 2;
+	public static int SCALE = (Toolkit.getDefaultToolkit().getScreenSize().getHeight() >= 900 && Toolkit.getDefaultToolkit().getScreenSize().getWidth() >= 1500) ? 4 : 3;
 	// game thread
 	private Thread thread;
 	public boolean running;

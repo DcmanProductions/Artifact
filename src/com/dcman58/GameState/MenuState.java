@@ -18,7 +18,7 @@ public class MenuState extends GameState {
 	private BufferedImage head;
 
 	private int currentChoice = 0;
-	private String[] options = { "Start", "About", "Quit" };
+	private String[] options = {"Start", "About", "Quit" };
 
 	private Color titleColor;
 	private Font titleFont;
@@ -83,7 +83,8 @@ public class MenuState extends GameState {
 		// draw menu options
 		g.setFont(font);
 		g.setColor(Color.WHITE);
-		g.drawString("Start", 145, 165);
+//		g.drawString("Continue", 145, 165);
+		g.drawString("New Game", 145, 165);
 		g.drawString("About Us and Controls", 100, 190);
 		g.drawString("Quit", 145, 215);
 
@@ -106,7 +107,7 @@ public class MenuState extends GameState {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
 			gsm.setState(PlayerSave.LoadLevel());
-		} else if(currentChoice == 1){
+		}/*else if(currentChoice==1){}*/ else if(currentChoice == 1){
 			gsm.setState(GameStateManager.About);
 		}else if (currentChoice == 2) {
 		

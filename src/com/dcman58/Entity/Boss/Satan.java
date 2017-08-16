@@ -45,7 +45,6 @@ public class Satan extends Enemy {
 	private double ticks;
 
 	public Satan(TileMap tm, Player p, ArrayList<Enemy> enemies, ArrayList<Explosion> explosions) {
-
 		super(tm);
 		player = p;
 		this.enemies = enemies;
@@ -55,7 +54,6 @@ public class Satan extends Enemy {
 		height = 40;
 		cwidth = 30;
 		cheight = 30;
-
 		health = maxHealth = 200;
 
 		moveSpeed = 1.4;
@@ -240,20 +238,10 @@ public class Satan extends Enemy {
 				x = tileMap.getWidth() / 2;
 				y = 40;
 			}
-			if (stepCount == 60) {
-				dy = 7;
-			}
-			if (y >= tileMap.getHeight() - 30) {
-				dy = 0;
-			}
-			if (stepCount > 60 && stepCount < 120 && stepCount % 5 == 0 && dy == 0) {
+			if (stepCount > 60 && stepCount < 90 && stepCount % 5 == 0 && dy == 0) {
 				gp = new GelPop(tileMap, player);
 				gp.setPosition(x, y);
 				gp.setVector(-3, 0);
-				enemies.add(gp);
-				gp = new GelPop(tileMap, player);
-				gp.setPosition(x, y);
-				gp.setVector(3, 0);
 				enemies.add(gp);
 			}
 			if (stepCount == 120) {

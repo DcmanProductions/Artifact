@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Main.GamePanel;
 
 @SuppressWarnings("all")
@@ -36,7 +37,7 @@ public class AcidState extends GameState {
 	public void update() {
 		handleInput();
 		if (time >= 400) {
-			gsm.setState(GameStateManager.LEVEL2ASTATE);
+			gsm.setState(PlayerSave.LoadLevel());
 		} else {
 			time++;
 		}

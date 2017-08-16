@@ -333,25 +333,23 @@ public class Level1CState extends GameState {
 	// finished level
 	private void eventFinish() {
 		eventCount++;
-		if(eventCount == 1) {
+		if (eventCount == 1) {
 			tb.clear();
-			tb.add(new Rectangle(
-				GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2, 0, 0));
-		}
-		else if(eventCount > 1) {
+			tb.add(new Rectangle(GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2, 0, 0));
+		} else if (eventCount > 1) {
 			tb.get(0).x -= 6;
 			tb.get(0).y -= 4;
 			tb.get(0).width += 12;
 			tb.get(0).height += 8;
 		}
-		if(eventCount == 60) {
+		if (eventCount >= 60) {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
 			JukeBox.stop("level1boss");
 			gsm.setState(GameStateManager.ACIDSTATE);
 		}
-		
+
 	}
 	
 	private void eventPortal() {

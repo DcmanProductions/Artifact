@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import com.dcman58.GameState.GameStateManager;
+import com.dcman58.Handlers.Debug;
 
 @SuppressWarnings("all")
 public class PlayerSave {
@@ -25,6 +26,9 @@ public class PlayerSave {
 	public static boolean hasTopLeft;
 	public static HUD hud;
 
+	public static int healthBooster = 0;
+	public static int lifeBooster = 0;
+
 	private static String FileName = "game.save", fileContent;
 	private static File objFile;
 	private static PrintWriter writer;
@@ -33,8 +37,8 @@ public class PlayerSave {
 	private static String folderName = System.getProperty("user.home") + "/ArtifactSaveFiles/";
 
 	public static void init() {
-		lives = 3;
-		health = 5;
+		lives = 3 + getLifeBooster();
+		health = 5 + getHealthBooster();
 		time = 0;
 		// System.out.println("Pieces: " + LoadArtifactHUD());
 		currentState = GameStateManager.LEVEL1ASTATE;
@@ -55,7 +59,6 @@ public class PlayerSave {
 			pw.println("bottomRight:" + getHasBottomRight());
 			pw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -65,7 +68,7 @@ public class PlayerSave {
 		FileWriter fw;
 		try {
 			fw = new FileWriter(FileName);
-			System.out.println("Saved File: level:" + currentState);
+			Debug.Log("Saved File: level:" + currentState);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println("level:" + currentState);
 			pw.println("piece:" + hasPiece);
@@ -75,7 +78,27 @@ public class PlayerSave {
 			pw.println("bottomRight:" + hasBottomRight);
 			pw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public static void Save(int currentState, int hasPiece, boolean hasTopLeft, boolean hasBottomLeft, boolean hasTopRight, boolean hasBottomRight, int healthBoost, int lifeBoost) {
+		FileWriter fw;
+		try {
+			fw = new FileWriter(FileName);
+			Debug.Log("Saved File: level:" + currentState);
+			PrintWriter pw = new PrintWriter(fw);
+			pw.println("level:" + currentState);
+			pw.println("piece:" + hasPiece);
+			pw.println("hb:" + healthBoost);
+			pw.println("lb:" + lifeBoost);
+			pw.println("topLeft:" + hasTopLeft);
+			pw.println("bottomLeft:" + hasBottomLeft);
+			pw.println("topRight:" + hasTopRight);
+			pw.println("bottomRight:" + hasBottomRight);
+			pw.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -107,27 +130,46 @@ public class PlayerSave {
 					hasTopRight = false;
 				}
 				if (text.contains("bottomRight:true")) {
-//					System.out.println("Bottom Right=true");
+					// System.out.println("Bottom Right=true");
 					hasBottomRight = true;
 				}
 				if (text.contains("bottomRight:false")) {
-//					System.out.println("Bottom Right=false");
+					// System.out.println("Bottom Right=false");
 					hasBottomRight = false;
 				}
-//				if (text.startsWith("piece:"))
-//					return (Integer.parseInt(text.substring(6)));
+				// if (text.startsWith("piece:"))
+				// return (Integer.parseInt(text.substring(6)));
 			}
 
 			br.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return 0;
 
+	}
+
+	public void LoadBoosters() {
+		try {
+			
+			FileReader fr = new FileReader(FileName);
+			BufferedReader br = new BufferedReader(fr);
+			String text;
+			while((text = br.readLine()) != null){
+				if(text.contains("hb:")){
+					healthBooster = (Integer.parseInt(text.substring(3)));
+				}
+				if(text.contains("lb:")){
+					lifeBooster = (Integer.parseInt(text.substring(3)));
+				}
+			}
+
+			
+		} catch (Exception e) {
+
+		}
 	}
 
 	public static int LoadLevel() {
@@ -151,6 +193,14 @@ public class PlayerSave {
 
 		return currentState;
 	}
+	
+	
+	public static void ResetGame(){
+		File fr = new File(FileName);
+		if(fr.exists()){
+			fr.delete();
+		}
+	}
 
 	public static int getLives() {
 		return lives;
@@ -158,6 +208,14 @@ public class PlayerSave {
 
 	public static void setLives(int i) {
 		lives = i;
+	}
+
+	private static int getHealthBooster() {
+		return healthBooster;
+	}
+
+	private static int getLifeBooster() {
+		return lifeBooster;
 	}
 
 	public static int getHealth() {

@@ -22,7 +22,6 @@ public class AboutState extends GameState {
 
 	@Override
 	public void init() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -59,7 +58,6 @@ public class AboutState extends GameState {
 
 	@Override
 	public void handleInput() {
-		// TODO Auto-generated method stub
 
 	}
 

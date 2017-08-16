@@ -22,7 +22,9 @@ public class GameStateManager {
 	public static final int LEVEL2ASTATE = 5;
 	public static final int LEVEL2BSTATE = 6;
 	public static final int LEVEL2CSTATE = 7;
-//	public static final int LEVEL2DSTATE = 8;
+	public static final int LEVEL3ASTATE = 8;
+	public static final int LEVEL3BSTATE = 9;
+	public static final int LEVEL3CSTATE = 10;
 
 	public static final int ACIDSTATE = 15;
 
@@ -57,6 +59,12 @@ public class GameStateManager {
 			gameStates[state] = new Level2BState(this);
 		else if (state == LEVEL2CSTATE)
 			gameStates[state] = new Level2CState(this);
+		else if (state == LEVEL3ASTATE)
+			gameStates[state] = new Level3AState(this);
+		else if (state == LEVEL3BSTATE)
+			gameStates[state] = new Level3BState(this);
+		else if (state == LEVEL3CSTATE)
+			gameStates[state] = new Level3CState(this);
 		else if (state == ACIDSTATE)
 			gameStates[state] = new AcidState(this);
 	}

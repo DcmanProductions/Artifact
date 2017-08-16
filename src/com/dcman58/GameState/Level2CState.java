@@ -15,6 +15,7 @@ import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Boss.Satan;
 import com.dcman58.Handlers.Keys;
+import com.dcman58.Handlers.Debug;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
@@ -32,7 +33,7 @@ public class Level2CState extends GameState {
 
 	private HUD hud;
 	ArrayList<ArtifactPickupTopLeft> artifactPickupTL;
-	private Satan god;
+	private Satan satan;
 
 	// events
 	private boolean blockInput = false;
@@ -67,7 +68,7 @@ public class Level2CState extends GameState {
 		// player
 		player = new Player(tileMap);
 		player.setPosition(50, 190);
-		player.setHealth(PlayerSave.getHealth() + 4);
+		player.setHealth(PlayerSave.getHealth() + 8);
 		player.setLives(PlayerSave.getLives() + 1);
 		player.setTime(PlayerSave.getTime());
 
@@ -105,9 +106,9 @@ public class Level2CState extends GameState {
 
 	private void populateEnemies() {
 		enemies.clear();
-		god = new Satan(tileMap, player, enemies, explosions);
-		god.setPosition(-9000, 9000);
-		enemies.add(god);
+		satan = new Satan(tileMap, player, enemies, explosions);
+		satan.setPosition(-9000, 9000);
+		enemies.add(satan);
 	}
 
 	public void update() {
@@ -115,30 +116,12 @@ public class Level2CState extends GameState {
 		// check keys
 		handleInput();
 
-		// System.out.println("X:"+player.getx()+" Y:"+player.gety());
-
-//		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
-//		ArtifactPickupTopLeft topLeftArtifact = new ArtifactPickupTopLeft(tileMap);
-//		topLeftArtifact.setPosition(159, 190);
-//		// check if boss dead event should start
-//		System.out.println("Showing Top Left");
-//		artifactPickupTL.add(topLeftArtifact);
-//		if (player.intersects(topLeftArtifact)) {
-//			System.out.println("interact reached");
-//			hud.showTopLeft = true;
-//			PlayerSave.hasTopLeft = true;
-//			PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 3, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
-//			artifactPickupTL.remove(0);
-//			if (eventBossDead) {
-//			}
-//		}
-
 		// check if player dead event should start
 		if (player.getHealth() == 0 || player.gety() > tileMap.getHeight()) {
 			eventDead = blockInput = true;
 		}
-		
-		if(god.isDead()){
+
+		if (satan.isDead()) {
 			eventBossDead = true;
 		}
 
@@ -216,7 +199,7 @@ public class Level2CState extends GameState {
 		for (int i = 0; i < tb.size(); i++) {
 			g.fill(tb.get(i));
 		}
-//		artifactPickupTL.get(0).draw(g);
+		// artifactPickupTL.get(0).draw(g);
 
 		// flash
 		if (flash) {
@@ -314,6 +297,7 @@ public class Level2CState extends GameState {
 	// finished level
 	private void eventFinish() {
 		eventCount++;
+		Debug.Log("Event Finish Level Initilized. Currnet Count:" + eventCount);
 		if (eventCount == 1) {
 			tb.clear();
 			tb.add(new Rectangle(GamePanel.WIDTH / 2, GamePanel.HEIGHT / 2, 0, 0));
@@ -323,7 +307,7 @@ public class Level2CState extends GameState {
 			tb.get(0).width += 12;
 			tb.get(0).height += 8;
 		}
-		if (eventCount == 60) {
+		if (eventCount >= 60) {
 			PlayerSave.setHealth(player.getHealth());
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
@@ -359,7 +343,7 @@ public class Level2CState extends GameState {
 		}
 		if (eventCount == 360) {
 			flash = true;
-			god.setPosition(160, 160);
+			satan.setPosition(160, 160);
 			DarkEnergy de;
 			for (int i = 0; i < 20; i++) {
 				de = new DarkEnergy(tileMap);
@@ -375,22 +359,25 @@ public class Level2CState extends GameState {
 		if (eventCount == 420) {
 			eventPortal = blockInput = false;
 			eventCount = 0;
-			god.setActive();
+			satan.setActive();
 		}
 
 	}
 
 	public void eventBossDead() {
 		eventCount++;
-		PlayerSave.hasTopLeft = true;
-		PlayerSave.Save(5, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+		
+		PlayerSave.ResetGame();
+		
+//		PlayerSave.hasTopLeft = true;
+//		PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 		if (eventCount == 1) {
 			player.stop();
 			JukeBox.stop("level1boss");
 			enemies.clear();
 		}
 		if (eventCount <= 120 && eventCount % 15 == 0) {
-			explosions.add(new Explosion(tileMap, god.getx(), god.gety()));
+			explosions.add(new Explosion(tileMap, satan.getx(), satan.gety()));
 			JukeBox.play("explode");
 		}
 		if (eventCount == 180) {

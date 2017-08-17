@@ -18,7 +18,7 @@ public class MenuState extends GameState {
 	private BufferedImage head;
 
 	private int currentChoice = 0;
-	private String[] options = {"Start", "About", "Quit" };
+	private String[] options = { "Continue", "New Game", "About", "Quit" };
 
 	private Color titleColor;
 	private Font titleFont;
@@ -71,7 +71,7 @@ public class MenuState extends GameState {
 		g.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
 
 		// draw title
-		g.setColor(new Color(255,152,92));
+		g.setColor(new Color(255, 152, 92));
 		g.setFont(titleFont);
 		g.drawString("A R T I F A C T:", 20, 50);
 
@@ -83,18 +83,20 @@ public class MenuState extends GameState {
 		// draw menu options
 		g.setFont(font);
 		g.setColor(Color.WHITE);
-//		g.drawString("Continue", 145, 165);
-		g.drawString("New Game", 145, 165);
-		g.drawString("About Us and Controls", 100, 190);
-		g.drawString("Quit", 145, 215);
+		g.drawString("Continue", 120, 150);
+		g.drawString("New Game", 120, 170);
+		g.drawString("About Us and Controls", 120, 190);
+		g.drawString("Quit", 120, 215);
 
 		// draw floating head
 		if (currentChoice == 0)
-			g.drawImage(head, 125, 154, null);
+			g.drawImage(head, 100, 135, null);
 		else if (currentChoice == 1)
-			g.drawImage(head, 80, 174, null);
+			g.drawImage(head, 100, 155, null);
 		else if (currentChoice == 2)
-			g.drawImage(head, 125, 200, null);
+			g.drawImage(head, 100, 175, null);
+		else if (currentChoice == 3)
+			g.drawImage(head, 100, 200, null);
 
 		// other
 		g.setFont(font2);
@@ -107,10 +109,15 @@ public class MenuState extends GameState {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
 			gsm.setState(PlayerSave.LoadLevel());
-		}/*else if(currentChoice==1){}*/ else if(currentChoice == 1){
+		} else if (currentChoice == 1) {
+			PlayerSave.ResetGame();
+			JukeBox.play("menuselect");
+			PlayerSave.init();
+			gsm.setState(GameStateManager.LEVEL1ASTATE);
+		} else if (currentChoice == 2) {
 			gsm.setState(GameStateManager.About);
-		}else if (currentChoice == 2) {
-		
+		} else if (currentChoice == 3) {
+
 			System.exit(0);
 		}
 	}

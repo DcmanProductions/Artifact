@@ -1,11 +1,6 @@
 package com.dcman58.Handlers;
 
 import java.awt.event.KeyEvent;
-import java.io.File;
-
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Controller;
-import org.lwjgl.input.Controllers;
 
 // this class contains a boolean array of current and previous key states
 // for the 10 keys that are used for this game.
@@ -30,7 +25,7 @@ public class Keys {
 	public static int ESCAPE = 9;
 	public static int F11 = 10;
 
-	public static Controller controller;
+//	public static Controller controller;O
 
 	public static void keySet(int i, boolean b) {
 

@@ -1,4 +1,4 @@
-package com.dcman58.Entity.Artfact;
+package com.dcman58.Entity.Pickups.Artfact;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

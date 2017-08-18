@@ -32,6 +32,12 @@ public class MenuState extends GameState {
 
 		super(gsm);
 
+		JukeBox.stop("level1");
+		JukeBox.stop("level1boss");
+		JukeBox.stop("level1B");
+		JukeBox.stop("level2");
+		
+
 		try {
 
 			// load floating head

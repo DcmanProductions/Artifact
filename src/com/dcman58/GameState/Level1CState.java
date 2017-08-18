@@ -13,11 +13,11 @@ import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Portal;
-import com.dcman58.Entity.Artfact.BottomLeftPiece;
-import com.dcman58.Entity.Artfact.BottomRightPiece;
-import com.dcman58.Entity.Artfact.TopLeftPiece;
-import com.dcman58.Entity.Artfact.TopRightPiece;
 import com.dcman58.Entity.Boss.Spirit;
+import com.dcman58.Entity.Pickups.Artfact.BottomLeftPiece;
+import com.dcman58.Entity.Pickups.Artfact.BottomRightPiece;
+import com.dcman58.Entity.Pickups.Artfact.TopLeftPiece;
+import com.dcman58.Entity.Pickups.Artfact.TopRightPiece;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -74,8 +74,8 @@ public class Level1CState extends GameState {
 		// player
 		player = new Player(tileMap);
 		player.setPosition(50, 190);
-		player.setHealth(PlayerSave.getHealth()+4);
-		player.setLives(PlayerSave.getLives()+1);
+		player.setHealth(PlayerSave.getHealth());
+		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
 		
 		// explosions

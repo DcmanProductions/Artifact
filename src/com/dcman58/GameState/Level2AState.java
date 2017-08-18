@@ -25,6 +25,7 @@ import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Teleport;
 import com.dcman58.Entity.Title;
+import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -223,7 +224,6 @@ public class Level2AState extends GameState {
 	}
 
 	public void update() {
-
 		// check keys
 		handleInput();
 

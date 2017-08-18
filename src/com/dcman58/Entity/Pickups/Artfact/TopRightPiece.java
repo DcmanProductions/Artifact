@@ -1,4 +1,4 @@
-package com.dcman58.Entity.Artfact;
+package com.dcman58.Entity.Pickups.Artfact;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -8,11 +8,11 @@ import javax.imageio.ImageIO;
 import com.dcman58.Entity.MapObject;
 import com.dcman58.TileMap.TileMap;
 
-public class BottomRightPiece extends MapObject {
+public class TopRightPiece extends MapObject {
 	
-private BufferedImage[] sprites;
+	private BufferedImage[] sprites;
 	
-	public BottomRightPiece(TileMap tm) {
+	public TopRightPiece(TileMap tm) {
 		super(tm);
 		try {	
 			BufferedImage spritesheet = ImageIO.read(
@@ -20,7 +20,7 @@ private BufferedImage[] sprites;
 			);
 			sprites = new BufferedImage[1];
 			width = height = 4;
-			sprites[0] = spritesheet.getSubimage(10, 10, 10, 10);
+			sprites[0] = spritesheet.getSubimage(10, 0, 10, 10);
 			animation.setFrames(sprites);
 			animation.setDelay(-1);
 		}
@@ -38,5 +38,5 @@ private BufferedImage[] sprites;
 	public void draw(Graphics2D g) {
 		super.draw(g);
 	}
-
+	
 }

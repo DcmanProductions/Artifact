@@ -19,6 +19,9 @@ import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Teleport;
 import com.dcman58.Entity.Title;
+import com.dcman58.Entity.Pickups.Boosters.BoosterPickupHealth;
+import com.dcman58.Entity.Pickups.Boosters.BoosterPickupLife;
+import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -36,6 +39,7 @@ public class Level1AState extends GameState {
 	private ArrayList<EnemyProjectile> eprojectiles;
 	private ArrayList<EnergyParticle> energyParticles;
 	private ArrayList<Explosion> explosions;
+	private ArrayList<BoosterPickupLife> lifeBoostersPickup;
 
 	private HUD hud;
 	private BufferedImage groundZeroText;
@@ -60,6 +64,7 @@ public class Level1AState extends GameState {
 
 		PlayerSave.Save(GameStateManager.LEVEL1ASTATE, 0);
 
+		lifeBoostersPickup = new ArrayList<BoosterPickupLife>();
 		// backgrounds
 		sky = new Background("/Backgrounds/sky.gif", 0);
 		clouds = new Background("/Backgrounds/clouds.gif", 0.1);
@@ -72,8 +77,7 @@ public class Level1AState extends GameState {
 		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
 		tileMap.loadMap("/Maps/level1a.map");
 		tileMap.setPosition(140, 0);
-		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(),
-				tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
+		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(), tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);
 		tileMap.setTween(1);
 
 		// player
@@ -133,12 +137,11 @@ public class Level1AState extends GameState {
 
 	private void populateEnemies() {
 		enemies.clear();
-		/*
-		 * Tengu t = new Tengu(tileMap, player, enemies); t.setPosition(1300,
-		 * 100); enemies.add(t); t = new Tengu(tileMap, player, enemies);
-		 * t.setPosition(1330, 100); enemies.add(t); t = new Tengu(tileMap,
-		 * player, enemies); t.setPosition(1360, 100); enemies.add(t);
-		 */
+
+		BoosterPickupLife lifeBooster = new BoosterPickupLife(tileMap);
+		lifeBooster.setPosition(3609, 131);
+		lifeBoostersPickup.add(lifeBooster);
+
 		GelPop gp;
 		Gazer g;
 
@@ -185,6 +188,15 @@ public class Level1AState extends GameState {
 
 		// check keys
 		handleInput();
+		// for(int i =0; i<healthBoostersPickup.size();i++) {
+//3609 131
+		if (player.intersects(new Rectangle(lifeBoostersPickup.get(0).getx(), lifeBoostersPickup.get(0).gety(), 32, 32)) && !lifeBoostersPickup.isEmpty()) {
+			lifeBoostersPickup.remove(0);
+			player.setLives(player.getLives() + 1);
+		}
+		// }
+
+//		Debug.LogPlayerPos(player);
 
 		// check if end of level event should start
 		if (teleport.contains(player)) {
@@ -296,6 +308,11 @@ public class Level1AState extends GameState {
 
 		// draw hud
 		hud.draw(g);
+
+		// draw health Boosters
+		for (int i = 0; i < lifeBoostersPickup.size(); i++) {
+			lifeBoostersPickup.get(i).draw(g);
+		}
 
 		// draw title
 		if (title != null)

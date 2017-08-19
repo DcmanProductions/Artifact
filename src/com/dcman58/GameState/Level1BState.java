@@ -217,10 +217,11 @@ public class Level1BState extends GameState {
 			}
 		}
 		for(int i=0;i<lifeBoosterPickup.size();i++) {
-			if(player.intersects(new Rectangle(lifeBoosterPickup.get(i).getx(),lifeBoosterPickup.get(i).gety(),32,32))) {
+			if(player.intersects(new Rectangle(lifeBoosterPickup.get(i).getx(),lifeBoosterPickup.get(i).gety(),lifeBoosterPickup.get(i).getWidth(),lifeBoosterPickup.get(i).getHeight()))) {
 				player.setLives(player.getLives()+1);
 				lifeBoosterPickup.remove(i);
 			}	
+
 		}
 		
 		// check keys

@@ -30,8 +30,8 @@ public class BoosterPickupHealth extends MapObject {
 		try {
 			BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/Other/Boosters.png"));
 			sprites = new BufferedImage[1];
-			width = height = 4;
-			sprites[0] = spritesheet.getSubimage(0, 0, 32, 32);
+			width = height = 16;
+			sprites[0] = spritesheet.getSubimage(0, 0, width, height);
 			animation.setFrames(sprites);
 		} catch (Exception e) {
 			e.printStackTrace();

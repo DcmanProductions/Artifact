@@ -98,18 +98,19 @@ public class Spirit extends Enemy {
 			return;
 		
 		for (int i = 0; i < lifePickup.size(); i++) {
-			if (player.intersects(new Rectangle(lifePickup.get(i).getx(), 185, 64, 64))) {
+			if (player.intersects(new Rectangle(lifePickup.get(i).getx(), lifePickup.get(i).gety(), lifePickup.get(i).getWidth(), lifePickup.get(i).getHeight()))) {
 				player.setLives(player.getLives() + 1);
 				lifePickup.remove(i);
 			}
 		}
 
 		for (int i = 0; i < healthPickup.size(); i++) {
-			if (player.intersects(new Rectangle(healthPickup.get(i).getx(), 191, 64, 64))) {
+			if (player.intersects(new Rectangle(healthPickup.get(i).getx(), healthPickup.get(i).gety(), healthPickup.get(i).getWidth(), healthPickup.get(i).getHeight()))) {
 				player.setHealth(player.getHealth() + 1);
 				healthPickup.remove(i);
 			}
 		}
+		
 
 		// restart attack pattern
 		if (step == steps.length) {

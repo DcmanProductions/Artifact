@@ -189,14 +189,17 @@ public class Level1AState extends GameState {
 		// check keys
 		handleInput();
 		// for(int i =0; i<healthBoostersPickup.size();i++) {
-//3609 131
-		if (player.intersects(new Rectangle(lifeBoostersPickup.get(0).getx(), lifeBoostersPickup.get(0).gety(), 32, 32)) && !lifeBoostersPickup.isEmpty()) {
-			lifeBoostersPickup.remove(0);
-			player.setLives(player.getLives() + 1);
+		// 3609 131
+		for (int i = 0; i < lifeBoostersPickup.size(); i++) {
+			Debug.Log("Life Booster "+i);
+			if (player.intersects(new Rectangle(lifeBoostersPickup.get(0).getx(), lifeBoostersPickup.get(0).gety(), 32, 32)) && !lifeBoostersPickup.isEmpty()) {
+				lifeBoostersPickup.remove(0);
+				player.setLives(player.getLives() + 1);
+			}
 		}
 		// }
 
-//		Debug.LogPlayerPos(player);
+		// Debug.LogPlayerPos(player);
 
 		// check if end of level event should start
 		if (teleport.contains(player)) {

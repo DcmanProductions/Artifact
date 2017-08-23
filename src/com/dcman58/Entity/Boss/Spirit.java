@@ -268,7 +268,7 @@ public class Spirit extends Enemy {
 				de.setPosition(x, y);
 				de.setVector(3, 0);
 				enemies.add(de);
-				int random = new Random().nextInt(1500);
+				int random = new Random().nextInt(500);
 				if (random <= 25) {
 					BoosterPickupHealth healthBooster = new BoosterPickupHealth(tileMap);
 					healthBooster.setVector(3, 0);

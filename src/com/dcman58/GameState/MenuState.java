@@ -132,15 +132,21 @@ public class MenuState extends GameState {
 		if (Keys.isPressed(Keys.ENTER))
 			select();
 		if (Keys.isPressed(Keys.UP)) {
-			if (currentChoice > 0) {
+//			if (currentChoice > 0) {
 				JukeBox.play("menuoption", 0);
 				currentChoice--;
-			}
+				if(currentChoice == -1){
+					currentChoice = 3;
+				}
+//			}
 		}
 		if (Keys.isPressed(Keys.DOWN)) {
-			if (currentChoice < options.length - 1) {
+//			if (currentChoice < options.length - 1) {
 				JukeBox.play("menuoption", 0);
 				currentChoice++;
+//			}
+			if(currentChoice >= options.length){
+				currentChoice = 0;
 			}
 		}
 	}

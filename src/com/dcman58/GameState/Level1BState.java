@@ -22,7 +22,6 @@ import com.dcman58.Entity.Teleport;
 import com.dcman58.Entity.Title;
 import com.dcman58.Entity.Pickups.Boosters.BoosterPickupHealth;
 import com.dcman58.Entity.Pickups.Boosters.BoosterPickupLife;
-import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;

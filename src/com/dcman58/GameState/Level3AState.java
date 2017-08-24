@@ -77,8 +77,8 @@ public class Level3AState extends GameState {
 
 		// tilemap
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/fireAnimatedTileSet.gif");
-		tileMap.loadMap("/Maps/level2a.map");
+		tileMap.loadTiles("/Tilesets/grasstileset.png");
+		tileMap.loadMap("/Maps/level3a.map");
 		// tileMap.loadMapImage("/Maps/Level2AMap.png");
 		tileMap.setPosition(140, 0);
 		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(), tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);

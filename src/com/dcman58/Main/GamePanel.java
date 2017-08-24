@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 
 import com.dcman58.GameState.GameStateManager;
+import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 
 @SuppressWarnings("all")
@@ -20,8 +21,8 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	// dimensions
 	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-//	 public static int WIDTH = 480;
-//	 public static int HEIGHT = 270;
+	// public static int WIDTH = 480;
+	// public static int HEIGHT = 270;
 	public static int WIDTH = 320;
 	public static int HEIGHT = 240;
 	// public static int WIDTH =
@@ -51,9 +52,12 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 	public GamePanel() {
 		super();
 		Game game = new Game();
-		game.icon();
-//		setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
-		 setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height));
+		// setSize(new Dimension(800,600));
+		// game.icon();
+		if (!Game.isFullscreen)
+			setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
+		else
+			setPreferredSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height));
 		setFocusable(true);
 		requestFocus();
 	}
@@ -92,8 +96,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		while (running) {
 			start = System.nanoTime();
 
-			Game.isFullscreen();
-
+			Debug.Log(Game.isFullscreen + "");
 			update();
 			draw();
 			drawToScreen();
@@ -125,8 +128,10 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 
 	private void drawToScreen() {
 		Graphics g2 = getGraphics();
-		// g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
+		// if (Game.isFullscreen)
 		g2.drawImage(image, 0, 0, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height, null);
+		// else if (!Game.isFullscreen)
+		// g2.drawImage(image, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
 		g2.dispose();
 		if (screenshot) {
 			screenshot = false;
@@ -168,6 +173,14 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 				return;
 			}
 		}
+
+//		if (key.getKeyCode() == KeyEvent.VK_F11 && Game.isFullscreen) {
+//			setSize(new Dimension(GamePanel.WIDTH * GamePanel.SCALE, GamePanel.HEIGHT * GamePanel.SCALE));
+//			Game.isFullscreen = true;
+//		} else if (key.getKeyCode() == KeyEvent.VK_F11 && !Game.isFullscreen) {
+//			setSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height));
+//			Game.isFullscreen = true;
+//		}
 		Keys.keySet(key.getKeyCode(), true);
 	}
 

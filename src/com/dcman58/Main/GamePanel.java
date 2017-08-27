@@ -96,7 +96,6 @@ public class GamePanel extends JPanel implements Runnable, KeyListener {
 		while (running) {
 			start = System.nanoTime();
 
-			Debug.Log(Game.isFullscreen + "");
 			update();
 			draw();
 			drawToScreen();

@@ -25,6 +25,9 @@ import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Teleport;
 import com.dcman58.Entity.Title;
+import com.dcman58.Entity.Pickups.Boosters.BoosterPickupHealth;
+import com.dcman58.Entity.Pickups.Boosters.BoosterPickupLife;
+import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -40,10 +43,15 @@ public class Level3AState extends GameState {
 	private Player player;
 	private TileMap tileMap;
 	private ArrayList<Enemy> enemies;
+
+	// Pickups
 	private ArrayList<ArtifactPickupBottomLeft> artifactPickupBL;
 	private ArrayList<ArtifactPickupTopLeft> artifactPickupTL;
 	private ArrayList<ArtifactPickupBottomRight> artifactPickupBR;
 	private ArrayList<ArtifactPickupTopRight> artifactPickupTR;
+	private ArrayList<BoosterPickupHealth> healthPickup;
+	private ArrayList<BoosterPickupLife> lifePickup;
+
 	private ArrayList<EnemyProjectile> eprojectiles;
 	private ArrayList<EnergyParticle> energyParticles;
 	private ArrayList<Explosion> explosions;
@@ -71,7 +79,7 @@ public class Level3AState extends GameState {
 		PlayerSave.Save(GameStateManager.LEVEL3ASTATE, PlayerSave.LoadArtifactHUD(), PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 
 		// backgrounds
-		sky = new Background("/Backgrounds/Night_Earth.png", 0);
+		sky = new Background("/Backgrounds/sunset.png", 0);
 		// clouds = new Background("/Backgrounds/clouds.gif", 0.1);
 		// mountains = new Background("/Backgrounds/mountains.gif", 0.2);
 
@@ -86,8 +94,8 @@ public class Level3AState extends GameState {
 
 		// player
 		player = new Player(tileMap);
-		 player.setPosition(73, 191);
-//		player.setPosition(3900, 191);
+		player.setPosition(73, 161);
+		// player.setPosition(3900, 191);
 		player.setHealth(PlayerSave.getHealth());
 		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
@@ -95,10 +103,13 @@ public class Level3AState extends GameState {
 		// Loads The Hud
 		hud = new HUD(player);
 
+		// Initialize Pickups
 		artifactPickupBL = new ArrayList<ArtifactPickupBottomLeft>();
 		artifactPickupTL = new ArrayList<ArtifactPickupTopLeft>();
 		artifactPickupBR = new ArrayList<ArtifactPickupBottomRight>();
 		artifactPickupTR = new ArrayList<ArtifactPickupTopRight>();
+		healthPickup = new ArrayList<BoosterPickupHealth>();
+		lifePickup = new ArrayList<BoosterPickupLife>();
 
 		// enemies
 		enemies = new ArrayList<Enemy>();
@@ -115,10 +126,10 @@ public class Level3AState extends GameState {
 
 		// title and subtitle
 		try {
-			HellText = ImageIO.read(getClass().getResourceAsStream("/HUD/Hell.png"));
+			HellText = ImageIO.read(getClass().getResourceAsStream("/HUD/EarthHUD.png"));
 			title = new Title(HellText.getSubimage(0, 0, 260, 35));
 			title.sety(60);
-			subtitle = new Title(HellText.getSubimage(0, 30, 150, 40));
+			subtitle = new Title(HellText.getSubimage(0, 40, 233, 30));
 			subtitle.sety(85);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,7 +150,7 @@ public class Level3AState extends GameState {
 		JukeBox.load("/SFX/enemyhit.mp3", "enemyhit");
 
 		// music
-		JukeBox.load("/Music/level1.mp3", "level1");
+		JukeBox.load("/Music/level3a.wav", "level1");
 		JukeBox.loop("level1", 600, JukeBox.getFrames("level1") - 2200);
 
 	}
@@ -152,15 +163,14 @@ public class Level3AState extends GameState {
 		DarkEnergy de = new DarkEnergy(tileMap);
 
 		Tengu t = new Tengu(tileMap, player, enemies);
-		
 
-//		ArtifactPickupBottomRight bottomRightArtifact;
-//		bottomRightArtifact = new ArtifactPickupBottomRight(tileMap);
-//		bottomRightArtifact.setPosition(3960, 191);
-//
-//		if (!PlayerSave.getHasBottomRight()) {
-//			artifactPickupBR.add(bottomRightArtifact);
-//		}
+		ArtifactPickupTopRight topRightArtifact;
+		topRightArtifact = new ArtifactPickupTopRight(tileMap);
+		topRightArtifact.setPosition(2806, 191);
+
+		if (!PlayerSave.getHasTopRight()) {
+			artifactPickupTR.add(topRightArtifact);
+		}
 
 	}
 
@@ -169,6 +179,7 @@ public class Level3AState extends GameState {
 		// check keys
 		handleInput();
 
+		Debug.LogPlayerPos(player);
 		PlayerSave.LoadArtifactHUD();
 
 		// check if end of level event should start
@@ -437,4 +448,3 @@ public class Level3AState extends GameState {
 	}
 
 }
-

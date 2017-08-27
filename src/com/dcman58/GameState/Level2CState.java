@@ -369,8 +369,8 @@ public class Level2CState extends GameState {
 		
 		PlayerSave.ResetGame();
 		
-//		PlayerSave.hasTopLeft = true;
-//		PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+		PlayerSave.hasTopLeft = true;
+		PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 		if (eventCount == 1) {
 			player.stop();
 			JukeBox.stop("level1boss");

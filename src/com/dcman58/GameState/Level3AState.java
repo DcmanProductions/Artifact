@@ -150,8 +150,8 @@ public class Level3AState extends GameState {
 		JukeBox.load("/SFX/enemyhit.mp3", "enemyhit");
 
 		// music
-		JukeBox.load("/Music/level3a.wav", "level1");
-		JukeBox.loop("level1", 600, JukeBox.getFrames("level1") - 2200);
+		JukeBox.load("/Music/level3a.wav", "level3");
+		JukeBox.loop("level3", 0, JukeBox.getFrames("level3") - 2200);
 
 	}
 

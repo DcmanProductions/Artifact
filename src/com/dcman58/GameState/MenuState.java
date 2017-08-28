@@ -36,6 +36,7 @@ public class MenuState extends GameState {
 		JukeBox.stop("level1boss");
 		JukeBox.stop("level1B");
 		JukeBox.stop("level2");
+		JukeBox.stop("level3");
 		
 
 		try {

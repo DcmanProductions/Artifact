@@ -1,6 +1,6 @@
 level:8
 piece:0
-topLeft:true
-bottomLeft:true
+topLeft:false
+bottomLeft:false
 topRight:false
-bottomRight:true
+bottomRight:false

@@ -150,7 +150,7 @@ public class Level3AState extends GameState {
 		JukeBox.load("/SFX/enemyhit.mp3", "enemyhit");
 
 		// music
-		JukeBox.load("/Music/level3a.wav", "level3");
+		JukeBox.load("/Music/Level3a.mp3", "level3");
 		JukeBox.loop("level3", 0, JukeBox.getFrames("level3") - 2200);
 
 	}
@@ -257,11 +257,11 @@ public class Level3AState extends GameState {
 			hud.showBottomRight = true;
 		}
 
-		if (player.intersects(new Rectangle(3960, 191, 32, 32)) && !artifactPickupBR.isEmpty() && !hud.showBottomRight) {
+		if (player.intersects(new Rectangle(3960, 191, 32, 32)) && !artifactPickupTR.isEmpty() && !hud.showBottomRight) {
 			System.out.println("interact reached");
 			hud.showBottomRight = true;
 			PlayerSave.hasBottomRight = true;
-			PlayerSave.Save(GameStateManager.LEVEL2ASTATE, 1, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+			PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 1, PlayerSave.getHasTopLeft(), PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 			System.out.println("Collected Bottom Right");
 			artifactPickupBR.remove(0);
 		}

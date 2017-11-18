@@ -107,7 +107,7 @@ public class MenuState extends GameState {
 
 		// other
 		g.setFont(font2);
-		g.drawString("2017 Drew Chase", 10, 232);
+		g.drawString("2013 Drew Chase", 10, 232);
 
 	}
 

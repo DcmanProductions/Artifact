@@ -347,6 +347,7 @@ public class Level1CState extends GameState {
 			PlayerSave.setLives(player.getLives());
 			PlayerSave.setTime(player.getTime());
 			JukeBox.stop("level1boss");
+			PlayerSave.Save(5, 0);
 			gsm.setState(GameStateManager.ACIDSTATE);
 		}
 

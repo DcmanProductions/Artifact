@@ -7,9 +7,12 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 
+import org.lwjgl.input.Mouse;
+
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Handlers.Keys;
+import com.dcman58.Handlers.MouseHandler;
 import com.dcman58.Main.GamePanel;
 
 @SuppressWarnings("all")
@@ -28,9 +31,14 @@ public class MenuState extends GameState {
 	private Font font2;
 	private PlayerSave ps;
 
+	private MouseHandler mh;
+	
 	public MenuState(GameStateManager gsm) {
 
 		super(gsm);
+		
+		JukeBox.load("/Music/mainmenu.wav", "mainmenu");
+		JukeBox.loop("mainmenu");
 
 		JukeBox.stop("level1");
 		JukeBox.stop("level1boss");
@@ -112,6 +120,7 @@ public class MenuState extends GameState {
 	}
 
 	private void select() {
+		JukeBox.stop("mainmenu");
 		if (currentChoice == 0) {
 			JukeBox.play("menuselect");
 			PlayerSave.init();
@@ -130,6 +139,11 @@ public class MenuState extends GameState {
 	}
 
 	public void handleInput() {
+		
+		if(Mouse.getX() > 120 && Mouse.getX() < 200 && Mouse.getY() > 150 && Mouse.getY() < 200){
+			currentChoice = 0;
+		}
+		
 		if (Keys.isPressed(Keys.ENTER))
 			select();
 		if (Keys.isPressed(Keys.UP)) {

@@ -23,8 +23,7 @@ public class AcidState extends GameState {
 	public AcidState(GameStateManager gsm) {
 		super(gsm);
 		try {
-			image = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/PlayerSprites.png")).getSubimage(0, 0,
-					40, 40);
+			image = ImageIO.read(getClass().getResourceAsStream("/Sprites/Player/PlayerSprites.png")).getSubimage(0, 0, 40, 40);
 		} catch (Exception e) {
 		}
 	}

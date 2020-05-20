@@ -18,6 +18,10 @@ public class Game {
 	static GamePanel gp = new GamePanel();
 
 	public static void main(String[] args) {
+		new Game();
+	}
+
+	public Game() {
 		window = new JFrame("Artifact: The Journey Unraveled");
 		window.add(new GamePanel());
 		window.setUndecorated(true);
@@ -27,7 +31,6 @@ public class Game {
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
-
 	}
 
 	public void icon() {

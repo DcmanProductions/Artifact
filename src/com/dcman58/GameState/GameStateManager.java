@@ -37,7 +37,7 @@ public class GameStateManager {
 		pauseState = new PauseState(this);
 		paused = false;
 
-		currentState = /*LEVEL2ASTATE;*/MENUSTATE;
+		currentState = /* LEVEL2ASTATE; */MENUSTATE;
 		loadState(currentState);
 
 	}

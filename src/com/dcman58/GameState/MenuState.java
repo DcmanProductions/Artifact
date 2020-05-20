@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 
-import org.lwjgl.input.Mouse;
+//import org.lwjgl.input.Mouse;
 
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Entity.PlayerSave;
+import com.dcman58.Entity.UI.MenuItem;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Handlers.MouseHandler;
 import com.dcman58.Main.GamePanel;
@@ -22,6 +24,7 @@ public class MenuState extends GameState {
 
 	private int currentChoice = 0;
 	private String[] options = { "Continue", "New Game", "About", "Quit" };
+	private MenuItem[] menuItems = new MenuItem[options.length];
 
 	private Color titleColor;
 	private Font titleFont;
@@ -32,12 +35,12 @@ public class MenuState extends GameState {
 	private PlayerSave ps;
 
 	private MouseHandler mh;
-	
+
 	public MenuState(GameStateManager gsm) {
 
 		super(gsm);
-		
-		JukeBox.load("/Music/mainmenu.wav", "mainmenu");
+
+		JukeBox.load("/Music/mainmenu.mp3", "mainmenu");
 		JukeBox.loop("mainmenu");
 
 		JukeBox.stop("level1");
@@ -45,7 +48,6 @@ public class MenuState extends GameState {
 		JukeBox.stop("level1B");
 		JukeBox.stop("level2");
 		JukeBox.stop("level3");
-		
 
 		try {
 
@@ -98,24 +100,24 @@ public class MenuState extends GameState {
 		// draw menu options
 		g.setFont(font);
 		g.setColor(Color.WHITE);
-		g.drawString("Continue", 120, 150);
-		g.drawString("New Game", 120, 170);
-		g.drawString("About Us and Controls", 120, 190);
-		g.drawString("Quit", 120, 215);
+		for (int i = 0; i < options.length; i++) {
+			menuItems[i] = new MenuItem(g, options[i], ((GamePanel.WIDTH / 2) - (font.getSize() + 20)), ((GamePanel.HEIGHT / 2) + (font.getSize() * i) + 5 * i) + 18, font.getSize());
+			menuItems[i].draw();
+		}
 
 		// draw floating head
-		if (currentChoice == 0)
-			g.drawImage(head, 100, 135, null);
-		else if (currentChoice == 1)
-			g.drawImage(head, 100, 155, null);
-		else if (currentChoice == 2)
-			g.drawImage(head, 100, 175, null);
-		else if (currentChoice == 3)
-			g.drawImage(head, 100, 200, null);
+		for (int i = 0; i < options.length; i++) {
+			if (currentChoice == i) {
+				menuItems[i].isSelected = true;
+				menuItems[i].draw();
+			} else {
+				menuItems[i].isSelected = false;
+			}
+		}
 
 		// other
 		g.setFont(font2);
-		g.drawString("2013 Drew Chase", 10, 232);
+		g.drawString("2010-" + Calendar.getInstance().get(Calendar.YEAR) + " (c) Drew Chase", 10, 232);
 
 	}
 
@@ -133,34 +135,24 @@ public class MenuState extends GameState {
 		} else if (currentChoice == 2) {
 			gsm.setState(GameStateManager.About);
 		} else if (currentChoice == 3) {
-
 			System.exit(0);
 		}
 	}
 
 	public void handleInput() {
-		
-		if(Mouse.getX() > 120 && Mouse.getX() < 200 && Mouse.getY() > 150 && Mouse.getY() < 200){
-			currentChoice = 0;
-		}
-		
 		if (Keys.isPressed(Keys.ENTER))
 			select();
 		if (Keys.isPressed(Keys.UP)) {
-//			if (currentChoice > 0) {
-				JukeBox.play("menuoption", 0);
-				currentChoice--;
-				if(currentChoice == -1){
-					currentChoice = 3;
-				}
-//			}
+			JukeBox.play("menuoption", 0);
+			currentChoice--;
+			if (currentChoice == -1) {
+				currentChoice = options.length - 1;
+			}
 		}
 		if (Keys.isPressed(Keys.DOWN)) {
-//			if (currentChoice < options.length - 1) {
-				JukeBox.play("menuoption", 0);
-				currentChoice++;
-//			}
-			if(currentChoice >= options.length){
+			JukeBox.play("menuoption", 0);
+			currentChoice++;
+			if (currentChoice >= options.length) {
 				currentChoice = 0;
 			}
 		}

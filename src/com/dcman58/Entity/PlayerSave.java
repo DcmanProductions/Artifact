@@ -29,12 +29,12 @@ public class PlayerSave {
 	public static int healthBooster = 0;
 	public static int lifeBooster = 0;
 
-	private static String FileName = "game.save", fileContent;
 	private static File objFile;
 	private static PrintWriter writer;
 	private static BufferedWriter bw;
 	private static BufferedReader reader;
-	private static String folderName = System.getProperty("user.home") + "/ArtifactSaveFiles/";
+	private static String folderName = System.getenv("APPDATA") + "/Chase Labs/Artifact/Saves/";
+	private static String FileName = "game.save", fileContent;
 
 	public static void init() {
 		lives = 3 + getLifeBooster();
@@ -46,9 +46,11 @@ public class PlayerSave {
 	}
 
 	public static void Save(int currentState, int hasPiece) {
+		File file = new File(folderName, FileName);
+		new File(folderName).mkdirs();
 		FileWriter fw;
 		try {
-			fw = new FileWriter(FileName);
+			fw = new FileWriter(file);
 			System.out.println("Saved File: level:" + currentState);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println("level:" + currentState);
@@ -58,6 +60,7 @@ public class PlayerSave {
 			pw.println("topRight:" + getHasTopRight());
 			pw.println("bottomRight:" + getHasBottomRight());
 			pw.close();
+		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -65,9 +68,11 @@ public class PlayerSave {
 	}
 
 	public static void Save(int currentState, int hasPiece, boolean hasTopLeft, boolean hasBottomLeft, boolean hasTopRight, boolean hasBottomRight) {
+		File file = new File(folderName, FileName);
+		new File(folderName).mkdirs();
 		FileWriter fw;
 		try {
-			fw = new FileWriter(FileName);
+			fw = new FileWriter(file);
 			Debug.Log("Saved File: level:" + currentState);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println("level:" + currentState);
@@ -84,9 +89,11 @@ public class PlayerSave {
 	}
 
 	public static void Save(int currentState, int hasPiece, boolean hasTopLeft, boolean hasBottomLeft, boolean hasTopRight, boolean hasBottomRight, int healthBoost, int lifeBoost) {
+		File file = new File(folderName, FileName);
+		new File(folderName).mkdirs();
 		FileWriter fw;
 		try {
-			fw = new FileWriter(FileName);
+			fw = new FileWriter(file);
 			Debug.Log("Saved File: level:" + currentState);
 			PrintWriter pw = new PrintWriter(fw);
 			pw.println("level:" + currentState);
@@ -107,7 +114,7 @@ public class PlayerSave {
 	public static int LoadArtifactHUD() {
 		FileReader fr;
 		try {
-			fr = new FileReader(FileName);
+			fr = new FileReader(new File(folderName, FileName));
 			BufferedReader br = new BufferedReader(fr);
 			String text;
 			while ((text = br.readLine()) != null) {
@@ -153,20 +160,19 @@ public class PlayerSave {
 
 	public void LoadBoosters() {
 		try {
-			
-			FileReader fr = new FileReader(FileName);
+
+			FileReader fr = new FileReader(new File(folderName, FileName));
 			BufferedReader br = new BufferedReader(fr);
 			String text;
-			while((text = br.readLine()) != null){
-				if(text.contains("hb:")){
+			while ((text = br.readLine()) != null) {
+				if (text.contains("hb:")) {
 					healthBooster = (Integer.parseInt(text.substring(3)));
 				}
-				if(text.contains("lb:")){
+				if (text.contains("lb:")) {
 					lifeBooster = (Integer.parseInt(text.substring(3)));
 				}
 			}
 
-			
 		} catch (Exception e) {
 
 		}
@@ -175,7 +181,7 @@ public class PlayerSave {
 	public static int LoadLevel() {
 		System.out.println("Loading Save File....\n");
 		try {
-			FileReader fr = new FileReader(FileName);
+			FileReader fr = new FileReader(new File(folderName, FileName));
 			BufferedReader br = new BufferedReader(fr);
 			String text;
 			while ((text = br.readLine()) != null) {
@@ -193,11 +199,10 @@ public class PlayerSave {
 
 		return currentState;
 	}
-	
-	
-	public static void ResetGame(){
-		File fr = new File(FileName);
-		if(fr.exists()){
+
+	public static void ResetGame() {
+		File fr = new File(folderName, FileName);
+		if (fr.exists()) {
 			fr.delete();
 		}
 	}

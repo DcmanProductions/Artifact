@@ -1,7 +1,6 @@
 package com.dcman58.Handlers;
 
 import com.dcman58.Entity.Player;
-import com.dcman58.TileMap.TileMap;
 
 public final class Debug {
 	

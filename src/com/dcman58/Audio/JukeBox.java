@@ -6,6 +6,9 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
+import com.dcman58.Main.GamePanel;
 
 public class JukeBox {
 
@@ -48,8 +51,12 @@ public class JukeBox {
 		if (c.isRunning())
 			c.stop();
 		c.setFramePosition(i);
-		while (!c.isRunning())
+		while (!c.isRunning()) {
+			FloatControl gainControl = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
+			gainControl.setValue(GamePanel.getInstance().settings.GetByKey("music").GetFloat());
 			c.start();
+		}
+
 	}
 
 	public static void stop(String s) {
@@ -80,6 +87,8 @@ public class JukeBox {
 	}
 
 	public static void loop(String s, int frame, int start, int end) {
+		FloatControl gainControl = (FloatControl) clips.get(s).getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl.setValue(GamePanel.getInstance().settings.GetByKey("music").GetFloat());
 		stop(s);
 		if (mute)
 			return;

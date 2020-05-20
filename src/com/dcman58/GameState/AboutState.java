@@ -4,14 +4,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 import com.dcman58.Handlers.Keys;
-import com.sun.prism.paint.Color;
 
 @SuppressWarnings("all")
 public class AboutState extends GameState {
 
 	private static Font titleFont = new Font("Arial", Font.BOLD, 25);
 	private static Font textFont = new Font("Arial", Font.PLAIN, 8);
-	private static Color textColor = Color.WHITE;
+//	private static Color textColor = Color.WHITE;
 
 //	GameStateManager gsm;
 	

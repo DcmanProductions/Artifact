@@ -19,9 +19,7 @@ import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Teleport;
 import com.dcman58.Entity.Title;
-import com.dcman58.Entity.Pickups.Boosters.BoosterPickupHealth;
 import com.dcman58.Entity.Pickups.Boosters.BoosterPickupLife;
-import com.dcman58.Handlers.Debug;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
@@ -191,7 +189,6 @@ public class Level1AState extends GameState {
 		// for(int i =0; i<healthBoostersPickup.size();i++) {
 		// 3609 131
 		for (int i = 0; i < lifeBoostersPickup.size(); i++) {
-			Debug.Log("Life Booster "+i);
 			if (player.intersects(new Rectangle(lifeBoostersPickup.get(0).getx(), lifeBoostersPickup.get(0).gety(), 32, 32)) && !lifeBoostersPickup.isEmpty()) {
 				lifeBoostersPickup.remove(0);
 				player.setLives(player.getLives() + 1);

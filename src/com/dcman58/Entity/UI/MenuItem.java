@@ -36,7 +36,7 @@ public class MenuItem {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			graphics.drawRect(startX - 3, startY - 12, width, height);
+//			graphics.drawRect(startX - 3, startY - 12, width, height);
 
 		}
 	}

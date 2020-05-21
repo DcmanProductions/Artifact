@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.UI.MenuItem;
+import com.dcman58.Entity.UI.SliderItem;
 import com.dcman58.Handlers.Keys;
 import com.dcman58.Handlers.MouseHandler;
 import com.dcman58.Main.GamePanel;
@@ -118,6 +119,7 @@ public class MenuState extends GameState {
 		// other
 		g.setFont(font2);
 		g.drawString("2010-" + Calendar.getInstance().get(Calendar.YEAR) + " (c) Drew Chase", 10, 232);
+//		new SliderItem(10, 232-50, GamePanel.WIDTH / 2, 10, -80, 0, 0, 8, g).draw();
 
 	}
 

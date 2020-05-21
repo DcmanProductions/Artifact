@@ -62,13 +62,13 @@ public class Level1BState extends GameState {
 
 	public void init() {
 
-		
 		// backgrounds
 		temple = new Background("/Backgrounds/temple.gif", 0.5, 0);
 
 		// tilemap
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
+		tileMap.loadTiles("/Tilesets/ruinstileset_mk3.png");
+//		tileMap.loadTiles("/Tilesets/ruinstileset.gif");
 		tileMap.loadMap("/Maps/level1b.map");
 		tileMap.setPosition(140, 0);
 		tileMap.setTween(1);
@@ -79,7 +79,7 @@ public class Level1BState extends GameState {
 		player.setHealth(PlayerSave.getHealth());
 		player.setLives(PlayerSave.getLives());
 		player.setTime(PlayerSave.getTime());
-		
+
 		lifeBoosterPickup = new ArrayList<BoosterPickupLife>();
 		healthBoosterPickup = new ArrayList<BoosterPickupHealth>();
 
@@ -139,15 +139,15 @@ public class Level1BState extends GameState {
 		BoosterPickupLife lifePickup = new BoosterPickupLife(tileMap);
 		lifePickup.setPosition(2339, 529);
 		lifeBoosterPickup.add(lifePickup);
-		
+
 		BoosterPickupHealth healthPickup = new BoosterPickupHealth(tileMap);
 		healthPickup.setPosition(2402, 479);
 		healthBoosterPickup.add(healthPickup);
-		
+
 		lifePickup = new BoosterPickupLife(tileMap);
 		lifePickup.setPosition(2457, 395);
 		lifeBoosterPickup.add(lifePickup);
-		
+
 		healthPickup = new BoosterPickupHealth(tileMap);
 		healthPickup.setPosition(2508, 349);
 		healthBoosterPickup.add(healthPickup);
@@ -209,20 +209,20 @@ public class Level1BState extends GameState {
 
 //		Debug.LogPlayerPos(player);
 
-		for(int i=0;i<healthBoosterPickup.size();i++) {
-			if(player.intersects(new Rectangle(healthBoosterPickup.get(i).getx(),healthBoosterPickup.get(i).gety(),32,32))) {
-				player.setHealth(player.getHealth()+1);
+		for (int i = 0; i < healthBoosterPickup.size(); i++) {
+			if (player.intersects(new Rectangle(healthBoosterPickup.get(i).getx(), healthBoosterPickup.get(i).gety(), 32, 32))) {
+				player.setHealth(player.getHealth() + 1);
 				healthBoosterPickup.remove(i);
 			}
 		}
-		for(int i=0;i<lifeBoosterPickup.size();i++) {
-			if(player.intersects(new Rectangle(lifeBoosterPickup.get(i).getx(),lifeBoosterPickup.get(i).gety(),lifeBoosterPickup.get(i).getWidth(),lifeBoosterPickup.get(i).getHeight()))) {
-				player.setLives(player.getLives()+1);
+		for (int i = 0; i < lifeBoosterPickup.size(); i++) {
+			if (player.intersects(new Rectangle(lifeBoosterPickup.get(i).getx(), lifeBoosterPickup.get(i).gety(), lifeBoosterPickup.get(i).getWidth(), lifeBoosterPickup.get(i).getHeight()))) {
+				player.setLives(player.getLives() + 1);
 				lifeBoosterPickup.remove(i);
-			}	
+			}
 
 		}
-		
+
 		// check keys
 		handleInput();
 
@@ -314,11 +314,11 @@ public class Level1BState extends GameState {
 
 		// draw tilemap
 		tileMap.draw(g);
-		
-		for(int i=0;i<lifeBoosterPickup.size();i++) {
+
+		for (int i = 0; i < lifeBoosterPickup.size(); i++) {
 			lifeBoosterPickup.get(i).draw(g);
 		}
-		for(int i=0;i<healthBoosterPickup.size();i++) {
+		for (int i = 0; i < healthBoosterPickup.size(); i++) {
 			healthBoosterPickup.get(i).draw(g);
 		}
 

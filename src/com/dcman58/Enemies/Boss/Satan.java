@@ -1,4 +1,4 @@
-package com.dcman58.Entity.Boss;
+package com.dcman58.Enemies.Boss;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -217,7 +217,7 @@ public class Satan extends Enemy {
 					dx = -1;
 				}
 			}
-			if (stepCount % 60 == 0) {
+			if (stepCount % 80 == 0) {
 				t = new Tengu(tileMap, player, enemies);
 				t.setPosition(x, y);
 				int dir = Math.random() < 0.5 ? 1 : -1;
@@ -254,7 +254,7 @@ public class Satan extends Enemy {
 		for (int i = 0; i < enemies.size(); i++) {
 			if (enemies.get(i).isDead() && enemies.get(i).toString().contains("com.dcman58.Enemies.GelPop")) {
 				this.health -= 1;
-			} else if (enemies.get(i).isDead()&& enemies.get(i).toString().contains("com.dcman58.Enemies.Tengu")) {
+			} else if (enemies.get(i).isDead() && enemies.get(i).toString().contains("com.dcman58.Enemies.Tengu")) {
 				this.health -= 4;
 			}
 		}

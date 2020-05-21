@@ -72,7 +72,7 @@ public class Level1AState extends GameState {
 
 		// tilemap
 		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tilesets/ruinstileset_mk2.png");
+		tileMap.loadTiles("/Tilesets/ruinstileset_mk3.png");
 		tileMap.loadMap("/Maps/level1a.map");
 		tileMap.setPosition(140, 0);
 		tileMap.setBounds(tileMap.getWidth() - 1 * tileMap.getTileSize(), tileMap.getHeight() - 2 * tileMap.getTileSize(), 0, 0);

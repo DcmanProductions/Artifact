@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Enemies.DarkEnergy;
+import com.dcman58.Enemies.Boss.Satan;
 import com.dcman58.Entity.ArtifactPickupTopLeft;
 import com.dcman58.Entity.Enemy;
 import com.dcman58.Entity.EnergyParticle;
@@ -13,9 +14,8 @@ import com.dcman58.Entity.Explosion;
 import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
-import com.dcman58.Entity.Boss.Satan;
-import com.dcman58.Handlers.Keys;
 import com.dcman58.Handlers.Debug;
+import com.dcman58.Handlers.Keys;
 import com.dcman58.Main.GamePanel;
 import com.dcman58.TileMap.Background;
 import com.dcman58.TileMap.TileMap;
@@ -366,11 +366,11 @@ public class Level2CState extends GameState {
 
 	public void eventBossDead() {
 		eventCount++;
-		
+
 		PlayerSave.ResetGame();
-		
-		//PlayerSave.hasTopLeft = true;
-		//PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
+
+		// PlayerSave.hasTopLeft = true;
+		// PlayerSave.Save(GameStateManager.LEVEL3ASTATE, 3, true, PlayerSave.getHasBottomLeft(), PlayerSave.getHasTopRight(), PlayerSave.getHasBottomRight());
 		if (eventCount == 1) {
 			player.stop();
 			JukeBox.stop("level1boss");

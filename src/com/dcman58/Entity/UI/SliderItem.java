@@ -22,10 +22,28 @@ public class SliderItem {
 	}
 
 	public void draw() {
+		// Bar
 		graphics.setColor(Color.red);
-		graphics.drawRect(posX, posY, width, height);
+		graphics.fillRect(posX, posY, width, height);
+		// Head
 		graphics.setColor(Color.white);
-		graphics.drawRect(posX, posY, 10, height + 10);
+//		graphics.fillRect(posX + getOffset(), posY - 5, 10, height + 10);
+		for (int i = 0; i < segments; i++) {
+//			graphics.fillRect(posX + (max/), posY - 5, 10, height + 10);
+
+		}
+	}
+
+	private int getOffset() {
+		if (current == min)
+			return 0;
+		else if (current == max)
+			return width;
+		else {
+
+			return 0;
+		}
+
 	}
 
 	public float Increment() {

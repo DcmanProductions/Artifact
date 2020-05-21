@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.dcman58.Audio.JukeBox;
 import com.dcman58.Enemies.DarkEnergy;
+import com.dcman58.Enemies.Boss.Spirit;
 import com.dcman58.Entity.Enemy;
 import com.dcman58.Entity.EnergyParticle;
 import com.dcman58.Entity.Explosion;
@@ -13,7 +14,6 @@ import com.dcman58.Entity.HUD;
 import com.dcman58.Entity.Player;
 import com.dcman58.Entity.PlayerSave;
 import com.dcman58.Entity.Portal;
-import com.dcman58.Entity.Boss.Spirit;
 import com.dcman58.Entity.Pickups.Artfact.BottomLeftPiece;
 import com.dcman58.Entity.Pickups.Artfact.BottomRightPiece;
 import com.dcman58.Entity.Pickups.Artfact.TopLeftPiece;

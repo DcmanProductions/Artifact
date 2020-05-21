@@ -1,4 +1,4 @@
-package com.dcman58.Entity.Boss;
+package com.dcman58.Enemies.Boss;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -96,7 +96,7 @@ public class Spirit extends Enemy {
 	public void update() {
 		if (health == 0)
 			return;
-		
+
 		for (int i = 0; i < lifePickup.size(); i++) {
 			if (player.intersects(new Rectangle(lifePickup.get(i).getx(), lifePickup.get(i).gety(), lifePickup.get(i).getWidth(), lifePickup.get(i).getHeight()))) {
 				player.setLives(player.getLives() + 1);
@@ -110,7 +110,6 @@ public class Spirit extends Enemy {
 				healthPickup.remove(i);
 			}
 		}
-		
 
 		// restart attack pattern
 		if (step == steps.length) {
@@ -268,24 +267,31 @@ public class Spirit extends Enemy {
 				de.setPosition(x, y);
 				de.setVector(3, 0);
 				enemies.add(de);
+
+				///////////////////
+				/// Drop Boosters
+				//////////////////
 				int random = new Random().nextInt(500);
 				if (random <= 25) {
-					BoosterPickupHealth healthBooster = new BoosterPickupHealth(tileMap);
-					healthBooster.setVector(3, 0);
-					healthBooster.setPosition(x, y - 35);
-					if (healthPickup.isEmpty()) 
-						healthPickup.add(healthBooster);
-				} else if (random >= 25 && random<= 50) {
-					BoosterPickupLife lifeBooster = new BoosterPickupLife(tileMap);
-					lifeBooster.setVector(3, 0);
-					lifeBooster.setPosition(x, y - 35);
-					if (lifePickup.isEmpty())
-						lifePickup.add(lifeBooster);
-				} else if (random > 50) {
-				}
+					if (player.getHealth() <= 10) {
+						BoosterPickupHealth healthBooster = new BoosterPickupHealth(tileMap);
+						healthBooster.setVector(3, 0);
+						healthBooster.setPosition(x, y - 35);
+						if (healthPickup.isEmpty())
+							healthPickup.add(healthBooster);
+					}
+				} else if (random >= 25 && random <= 50) {
+					if (player.getLives() <= 2) {
+						BoosterPickupLife lifeBooster = new BoosterPickupLife(tileMap);
+						lifeBooster.setVector(3, 0);
+						lifeBooster.setPosition(x, y - 35);
+						if (lifePickup.isEmpty())
+							lifePickup.add(lifeBooster);
+					}
+				} 
 
-				Debug.Log("number: "+random);
-				
+				Debug.Log("number: " + random);
+
 			}
 
 			if (stepCount == 120) {
